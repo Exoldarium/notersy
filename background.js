@@ -11,6 +11,9 @@ const arr = [];
 
 // grab the highlighted text and add it to an array
 chrome.contextMenus.onClicked.addListener((text) => {
-  arr.push(text.selectionText);
+  arr.push({
+    url: text.pageUrl,
+    text: text.selectionText
+  });
   chrome.storage.local.set({ "selectedText": arr });
 });
