@@ -1,3 +1,4 @@
+
 // add extension to context menu
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
@@ -13,7 +14,8 @@ const arr = [];
 chrome.contextMenus.onClicked.addListener((text) => {
   arr.push({
     url: text.pageUrl,
-    text: text.selectionText
+    text: text.selectionText,
+    id: self.crypto.randomUUID(),
   });
   chrome.storage.local.set({ "selectedText": arr });
 });

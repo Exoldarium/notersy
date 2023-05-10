@@ -14,13 +14,14 @@ chrome.storage.local.get('selectedText', (text) => {
     url.textContent = obj.url;
     text.textContent = obj.text;
     input.type = 'checkbox';
+    input.id = obj.id;
 
     li.appendChild(url);
     li.appendChild(text);
     li.appendChild(input);
     ul.appendChild(li);
   });
-
+  console.log(selectedText);
 });
 
 function checkInput() {
