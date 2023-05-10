@@ -7,9 +7,10 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
-// grab the highlighted text
+const arr = [];
+
+// grab the highlighted text and add it to an array
 chrome.contextMenus.onClicked.addListener((text) => {
-  const selectedText = text.selectionText;
-  chrome.storage.local.set({ "selectedText": selectedText });
-  // console.log(selectedText);
+  arr.push(text.selectionText);
+  chrome.storage.local.set({ "selectedText": arr });
 });
