@@ -33,9 +33,9 @@
     const input = document.querySelectorAll('input[type="checkbox"]');
     input.forEach(input => {
       // check if input is checked
-      if (input.checked === true) {
+      if (input.checked) {
         for (const key of selectedText) {
-          // if the text content of the key matches selected input id (i'm using text as id)
+          // if the text content of the key matches selected input id (i'm using note text as id)
           if (key.text === input.id) {
             // remove that key
             const index = selectedText.indexOf(key);
