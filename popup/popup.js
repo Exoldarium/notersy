@@ -48,8 +48,11 @@
     chrome.storage.local.set({ "selectedText": selectedText });
     // send message to background.js with the new storage data
     chrome.runtime.sendMessage({ message: selectedText });
+    // reload popup on successful delete
     location.reload();
   }
 
+  // display the amount of notes on the popup icon
+  chrome.action.setBadgeText({ text: selectedText.length.toString() });
   deleteButton.addEventListener('click', checkInput);
 })();

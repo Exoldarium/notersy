@@ -18,11 +18,11 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 
   // add new notes on context menu click
-  chrome.contextMenus.onClicked.addListener((text) => {
+  chrome.contextMenus.onClicked.addListener(async (text) => {
     res.selectedText.push({
       url: text.pageUrl,
       text: text.selectionText,
     });
-    chrome.storage.local.set({ "selectedText": res.selectedText });
+    await chrome.storage.local.set({ "selectedText": res.selectedText });
   });
 })();
