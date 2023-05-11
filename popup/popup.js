@@ -11,15 +11,21 @@
     const text = document.createElement('p');
     const li = document.createElement('li');
     const input = document.createElement('input');
+    const link = document.createElement('a');
+    console.log(obj.url);
 
-    url.textContent = obj.url;
+    link.textContent = new URL(obj.url).hostname;
+    link.href = obj.url;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
     text.textContent = obj.text;
     input.type = 'checkbox';
     input.id = obj.text;
 
+    li.appendChild(input);
+    url.appendChild(link);
     li.appendChild(url);
     li.appendChild(text);
-    li.appendChild(input);
     ul.appendChild(li);
   });
 
