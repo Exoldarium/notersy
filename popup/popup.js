@@ -12,7 +12,6 @@
     const li = document.createElement('li');
     const input = document.createElement('input');
     const link = document.createElement('a');
-    console.log(obj.url);
 
     link.textContent = new URL(obj.url).hostname;
     link.href = obj.url;
