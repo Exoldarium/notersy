@@ -32,7 +32,7 @@
   function checkInput() {
     const input = document.querySelectorAll('input[type="checkbox"]');
     input.forEach(input => {
-      // check which input is checked
+      // check if input is checked
       if (input.checked === true) {
         for (const key of selectedText) {
           // if the text content of the key matches selected input id (i'm using text as id)
