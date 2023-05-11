@@ -48,6 +48,7 @@
     chrome.storage.local.set({ "selectedText": selectedText });
     // send message to background.js with the new storage data
     chrome.runtime.sendMessage({ message: selectedText });
+    location.reload();
   }
 
   deleteButton.addEventListener('click', checkInput);
