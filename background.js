@@ -7,18 +7,26 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
-const arr = [];
+(async () => {
+  // grab data from local storage
+  const res = await chrome.storage.local.get('selectedText');
+  const data = res.selectedText;
+  data.shift();
 
-// grab the highlighted text and add it to an array
-chrome.contextMenus.onClicked.addListener((text) => {
-  arr.push({
-    url: text.pageUrl,
-    text: text.selectionText,
+  // update local storage with new data from popup.js
+  chrome.runtime.onMessage.addListener((request) => {
+    console.log(request.message);
+    data.length = 0;
+    data.push(...request.message);
   });
-  chrome.storage.local.set({ "selectedText": arr });
-});
 
-chrome.storage.local.get('selectedText', (text) => {
-  console.log({ text });
-  console.log({ arr });
-});
+  // add new notes on context menu click
+  chrome.contextMenus.onClicked.addListener((text) => {
+    data.push({
+      url: text.pageUrl,
+      text: text.selectionText,
+    });
+    chrome.storage.local.set({ "selectedText": data });
+  });
+  console.log({ data });
+})();

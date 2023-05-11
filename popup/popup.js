@@ -1,10 +1,11 @@
-const ul = document.querySelector(".noteList");
-const deleteButton = document.querySelector(".deleteButton");
+// get selected text from local storage
+(async () => {
+  const res = await chrome.storage.local.get('selectedText');
+  const ul = document.querySelector(".noteList");
+  const deleteButton = document.querySelector(".deleteButton");
+  const selectedText = res.selectedText;
 
-// get selected text from local storage and add it to HTML
-chrome.storage.local.get('selectedText', (popupText) => {
-  const selectedText = popupText.selectedText;
-
+  // create elements and add data to html
   selectedText.map(obj => {
     const url = document.createElement('h2');
     const text = document.createElement('p');
@@ -22,6 +23,7 @@ chrome.storage.local.get('selectedText', (popupText) => {
     ul.appendChild(li);
   });
 
+  // delete selected notes
   function checkInput() {
     const input = document.querySelectorAll('input[type="checkbox"]');
     input.forEach(input => {
@@ -30,18 +32,15 @@ chrome.storage.local.get('selectedText', (popupText) => {
           if (key.text === input.id) {
             const index = selectedText.indexOf(key);
             selectedText.splice(index, 1);
-            console.log(index);
-            chrome.storage.local.set({ "selectedText": selectedText });
           }
         }
       }
-    })
-    // console.log(input);
+    });
+    // update local storage
+    chrome.storage.local.set({ "selectedText": selectedText });
+    // send message to background.js with the new storage data
+    chrome.runtime.sendMessage({ message: selectedText });
   }
 
   deleteButton.addEventListener('click', checkInput);
-  console.log({ popupText });
-});
-
-
-// console.log(ul);
+})();
