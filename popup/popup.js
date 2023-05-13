@@ -1,6 +1,6 @@
 // get selected text from local storage
 (async () => {
-  const res = await chrome.storage.local.get('selectedText');
+  const res = await chrome.storage.session.get('selectedText');
   const ul = document.querySelector(".noteList");
   const deleteButton = document.querySelector(".deleteButton");
   const selectedText = res.selectedText;
@@ -44,8 +44,9 @@
         }
       }
     });
+
     // update local storage
-    chrome.storage.local.set({ "selectedText": selectedText });
+    chrome.storage.session.set({ "selectedText": selectedText });
     // send message to background.js with the new storage data
     chrome.runtime.sendMessage({ message: selectedText });
     // reload popup on successful delete
