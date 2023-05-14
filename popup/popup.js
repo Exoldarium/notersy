@@ -1,4 +1,4 @@
-// get selected text from local storage
+// get selected text from session storage
 (async () => {
   const res = await chrome.storage.session.get('selectedText');
   const ul = document.querySelector(".noteList");
@@ -45,15 +45,15 @@
       }
     });
 
-    // update local storage
+    // update session storage
     chrome.storage.session.set({ "selectedText": selectedText });
     // send message to background.js with the new storage data
     chrome.runtime.sendMessage({ message: selectedText });
     // reload popup on successful delete
     location.reload();
   }
-
+  console.log(res);
   // display the amount of notes on the popup icon
-  chrome.action.setBadgeText({ text: selectedText.length.toString() });
+  await chrome.action.setBadgeText({ text: selectedText.length.toString() });
   deleteButton.addEventListener('click', checkInput);
 })();
