@@ -1,4 +1,3 @@
-// get selected text from session storage
 (async () => {
   const res = await chrome.storage.session.get('selectedText');
   const notesList = document.querySelector(".noteList");
@@ -7,7 +6,7 @@
   const selectedText = res.selectedText;
   console.log({ selectedText });
 
-  // create elements and add data to html
+  // create categories and add data to DOM
   selectedText.map(obj => {
     const li = document.createElement('li');
     const categoryButton = document.createElement('button');
@@ -19,55 +18,74 @@
     categoryList.appendChild(li);
   });
 
-  for (const key of selectedText) {
-    key.note.map(obj => {
-      const url = document.createElement('h2');
-      const text = document.createElement('p');
-      const li = document.createElement('li');
-      const input = document.createElement('input');
-      const link = document.createElement('a');
+  // TODO:
+  // categories should be displayed in a row, on click the menu should go to top and display a column
 
-      link.textContent = new URL(obj.url).hostname;
-      link.href = obj.url;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      text.textContent = obj.text;
-      input.type = 'checkbox';
-      input.id = obj.text;
+  let counter = 0;
+  function displayNotesOnCategoryClick(e) {
+    // track how many times the button has been clicked, we don't want to duplicate notes
+    counter += 1;
+    if (counter > 1) {
+      return;
+    }
 
-      li.appendChild(input);
-      url.appendChild(link);
-      li.appendChild(url);
-      li.appendChild(text);
-      notesList.appendChild(li);
-    });
+    // add notes to DOM on click
+    for (const key of selectedText) {
+      if (e.target.textContent === key.name) {
+        key.note.map(obj => {
+          const url = document.createElement('h2');
+          const text = document.createElement('p');
+          const li = document.createElement('li');
+          const input = document.createElement('input');
+          const link = document.createElement('a');
+
+          link.textContent = new URL(obj.url).hostname;
+          link.href = obj.url;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          text.textContent = obj.text;
+          input.type = 'checkbox';
+          input.id = obj.text;
+
+          li.appendChild(input);
+          url.appendChild(link);
+          li.appendChild(url);
+          li.appendChild(text);
+          notesList.appendChild(li);
+        });
+      }
+    }
   }
 
   // delete selected notes
-  function checkInput() {
+  async function deleteCheckedInput() {
     const input = document.querySelectorAll('input[type="checkbox"]');
     input.forEach(input => {
       // check if input is checked
       if (input.checked) {
-        for (const key of selectedText) {
-          // if the text content of the key matches selected input id (i'm using note text as id)
-          if (key.text === input.id) {
-            // remove that key
-            const index = selectedText.indexOf(key);
-            selectedText.splice(index, 1);
+        for (const keys of selectedText) {
+          for (const key of keys.note) {
+            // if the text content of the key matches selected input id (i'm using note text as id)
+            if (key.text === input.id) {
+              // remove that key
+              const index = keys.note.indexOf(key);
+              keys.note.splice(index, 1);
+            }
           }
         }
       }
     });
 
     // update session storage
-    chrome.storage.session.set({ "selectedText": selectedText });
+    await chrome.storage.session.set({ "selectedText": selectedText });
     // send message to background.js with the new storage data
-    chrome.runtime.sendMessage({ message: selectedText });
-    // reload popup on successfnotesList delete
+    await chrome.runtime.sendMessage({ message: selectedText });
+    // reload popup on successful delete
     location.reload();
   }
-  // display the amount of notes on the popup icon
+  // display the amount of categories on the popup icon
   await chrome.action.setBadgeText({ text: selectedText.length.toString() });
-  deleteButton.addEventListener('click', checkInput);
+
+  deleteButton.addEventListener('click', deleteCheckedInput);
+  categoryList.addEventListener('click', displayNotesOnCategoryClick);
 })();

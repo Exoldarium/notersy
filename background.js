@@ -26,7 +26,7 @@ chrome.runtime.onInstalled.addListener(() => {
     // check if key already exists
     for (const key of arr) {
       if (date === key.name) {
-        // if it does add a new note to it
+        // if it does, add a new note to it
         key.note.push({
           url: text.pageUrl,
           text: text.selectionText,
@@ -34,7 +34,7 @@ chrome.runtime.onInstalled.addListener(() => {
         return;
       }
     }
-    // if it doesn't create a new key
+    // if it doesn't, create a new key
     arr.push({
       name: date,
       note: [{
@@ -45,8 +45,8 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 
   // add note to local storage
-  chrome.contextMenus.onClicked.addListener(() => {
-    chrome.storage.session.set({ "selectedText": arr });
+  chrome.contextMenus.onClicked.addListener(async () => {
+    await chrome.storage.session.set({ "selectedText": arr });
   });
   console.log({ arr });
 })();
