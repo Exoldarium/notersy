@@ -24,14 +24,14 @@
   let counter = 0;
   function displayNotesOnCategoryClick(e) {
     // track how many times the button has been clicked, we don't want to duplicate notes
-    counter += 1;
-    if (counter > 1) {
+    if (counter >= 1) {
       return;
     }
 
     // add notes to DOM on click
     for (const key of selectedText) {
       if (e.target.textContent === key.name) {
+        counter += 1;
         key.note.map(obj => {
           const url = document.createElement('h2');
           const text = document.createElement('p');
