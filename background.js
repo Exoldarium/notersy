@@ -11,7 +11,6 @@ chrome.runtime.onInstalled.addListener(() => {
   // initialize empty array to store data
   const arr = [];
   const date = new Date().toString().slice(0, 15);
-  console.log({ arr });
 
   // update local storage with new data from popup.js
   await chrome.runtime.onMessage.addListener((request) => {
@@ -23,17 +22,19 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 
   // add new notes on context menu click
-  chrome.contextMenus.onClicked.addListener(async (text) => {
-    // try to add some if logic here in order to make the correct push
+  chrome.contextMenus.onClicked.addListener((text) => {
+    // check if key already exists
     for (const key of arr) {
       if (date === key.name) {
+        // if it does add a new note to it
         key.note.push({
           url: text.pageUrl,
           text: text.selectionText,
         });
-        return
+        return;
       }
     }
+    // if it doesn't create a new key
     arr.push({
       name: date,
       note: [{
@@ -41,6 +42,11 @@ chrome.runtime.onInstalled.addListener(() => {
         text: text.selectionText,
       }]
     });
+  });
+
+  // add note to local storage
+  chrome.contextMenus.onClicked.addListener(() => {
     chrome.storage.session.set({ "selectedText": arr });
   });
+  console.log({ arr });
 })();
