@@ -21,9 +21,9 @@
   // TODO:
   // categories should be displayed in a row, on click the menu should go to top and display a column
 
+  // track how many times the button has been clicked, we don't want to duplicate notes
   let counter = 0;
   function displayNotesOnCategoryClick(e) {
-    // track how many times the button has been clicked, we don't want to duplicate notes
     if (counter >= 1) {
       return;
     }

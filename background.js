@@ -16,7 +16,7 @@ chrome.runtime.onInstalled.addListener(() => {
   await chrome.runtime.onMessage.addListener((request) => {
     // check if there is a message
     if (request) {
-      arr.length = 0; // set storage array to 0 so that it doesn't add the old data when new data is pushed
+      arr.length = 0; // set array to 0 so that it doesn't add old data when new data is pushed
       arr.push(...request.message);
     }
   });
@@ -34,6 +34,7 @@ chrome.runtime.onInstalled.addListener(() => {
         return;
       }
     }
+
     // if it doesn't, create a new key
     arr.push({
       name: date,
