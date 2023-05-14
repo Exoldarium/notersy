@@ -58,7 +58,7 @@
   }
 
   // delete selected notes
-  async function deleteCheckedInput() {
+  function deleteCheckedInput() {
     const input = document.querySelectorAll('input[type="checkbox"]');
     input.forEach(input => {
       // check if input is checked
@@ -77,9 +77,9 @@
     });
 
     // update session storage
-    await chrome.storage.session.set({ "selectedText": selectedText });
+    chrome.storage.session.set({ "selectedText": selectedText });
     // send message to background.js with the new storage data
-    await chrome.runtime.sendMessage({ message: selectedText });
+    chrome.runtime.sendMessage({ message: selectedText });
     // reload popup on successful delete
     location.reload();
   }
