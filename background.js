@@ -23,7 +23,7 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 
   // add new notes on context menu click
-  chrome.contextMenus.onClicked.addListener((text) => {
+  await chrome.contextMenus.onClicked.addListener((text) => {
     // check if key already exists
     for (const key of arr) {
       // by default notes are pushed to the current date category
@@ -56,7 +56,7 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 
   // add note to session storage
-  chrome.contextMenus.onClicked.addListener(async () => {
+  await chrome.contextMenus.onClicked.addListener(() => {
     chrome.storage.session.set({ "selectedText": arr });
   });
   console.log({ arr });

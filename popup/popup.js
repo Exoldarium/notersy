@@ -45,7 +45,7 @@
 
   // track how many times the button has been clicked, we don't want to duplicate notes
   let counter = 0;
-  function displayNotesOnCategoryClick(e) {
+  async function displayNotesOnCategoryClick(e) {
     if (counter >= 1) {
       return;
     }
@@ -60,14 +60,14 @@
     }
 
     // update storage and send it to background.js
-    chrome.storage.session.set({ "selectedText": selectedText });
-    chrome.runtime.sendMessage({ message: selectedText });
+    await chrome.storage.session.set({ "selectedText": selectedText });
+    await chrome.runtime.sendMessage({ message: selectedText });
     // rerender the html every time the button is clicked so that correct category is displayed
     location.reload();
   }
 
   // delete selected notes
-  function deleteCheckedInput() {
+  async function deleteCheckedInput() {
     const input = document.querySelectorAll('input[type="checkbox"]');
     input.forEach(input => {
       // check if input is checked
@@ -86,9 +86,9 @@
     });
 
     // update session storage
-    chrome.storage.session.set({ "selectedText": selectedText });
+    await chrome.storage.session.set({ "selectedText": selectedText });
     // send message to background.js with the new storage data
-    chrome.runtime.sendMessage({ message: selectedText });
+    await chrome.runtime.sendMessage({ message: selectedText });
     // rerender popup on successful delete
     location.reload();
   }
@@ -96,8 +96,8 @@
   // TODO:
   // i might be able to use reduce to display the total note count
   await chrome.action.setBadgeText({ text: selectedText.length.toString() });
-  chrome.storage.session.set({ "selectedText": selectedText });
-  chrome.runtime.sendMessage({ message: selectedText });
+  await chrome.storage.session.set({ "selectedText": selectedText });
+  await chrome.runtime.sendMessage({ message: selectedText });
 
   deleteButton.addEventListener('click', deleteCheckedInput);
   categoryList.addEventListener('click', displayNotesOnCategoryClick);
