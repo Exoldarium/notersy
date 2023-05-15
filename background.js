@@ -25,8 +25,16 @@ chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.onClicked.addListener((text) => {
     // check if key already exists
     for (const key of arr) {
-      if (date === key.name) {
-        // if it does, add a new note to it
+      // by default notes are pushed to the current date category
+      if (date === key.date) {
+        key.note.push({
+          url: text.pageUrl,
+          text: text.selectionText,
+        });
+        return;
+      }
+      // if category is active (clicked), notes are pushed to that category
+      else if (key.active) {
         key.note.push({
           url: text.pageUrl,
           text: text.selectionText,
@@ -37,7 +45,8 @@ chrome.runtime.onInstalled.addListener(() => {
 
     // if it doesn't, create a new key
     arr.push({
-      name: date,
+      date: date,
+      active: false,
       note: [{
         url: text.pageUrl,
         text: text.selectionText,

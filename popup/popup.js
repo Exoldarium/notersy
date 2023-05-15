@@ -11,15 +11,37 @@
     const li = document.createElement('li');
     const categoryButton = document.createElement('button');
 
-    categoryButton.textContent = obj.name;
+    // display only the notes from the category that has been clicked
+    if (obj.active) {
+      obj.note.map(obj => {
+        const url = document.createElement('h2');
+        const text = document.createElement('p');
+        const li = document.createElement('li');
+        const input = document.createElement('input');
+        const link = document.createElement('a');
+
+        link.textContent = new URL(obj.url).hostname;
+        link.href = obj.url;
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        text.textContent = obj.text;
+        input.type = 'checkbox';
+        input.id = obj.text;
+
+        li.appendChild(input);
+        url.appendChild(link);
+        li.appendChild(url);
+        li.appendChild(text);
+        notesList.appendChild(li);
+      });
+    }
+
+    categoryButton.textContent = obj.date;
     categoryButton.type = 'button';
 
     li.appendChild(categoryButton);
     categoryList.appendChild(li);
   });
-
-  // TODO:
-  // categories should be displayed in a row, on click the menu should go to top and display a column
 
   // track how many times the button has been clicked, we don't want to duplicate notes
   let counter = 0;
@@ -28,33 +50,20 @@
       return;
     }
 
-    // add notes to DOM on click
+    // if the category is clicked set active true, if not set it to false
     for (const key of selectedText) {
-      if (e.target.textContent === key.name) {
+      key.active = false;
+      if (e.target.textContent === key.date) {
         counter += 1;
-        key.note.map(obj => {
-          const url = document.createElement('h2');
-          const text = document.createElement('p');
-          const li = document.createElement('li');
-          const input = document.createElement('input');
-          const link = document.createElement('a');
-
-          link.textContent = new URL(obj.url).hostname;
-          link.href = obj.url;
-          link.target = "_blank";
-          link.rel = "noopener noreferrer";
-          text.textContent = obj.text;
-          input.type = 'checkbox';
-          input.id = obj.text;
-
-          li.appendChild(input);
-          url.appendChild(link);
-          li.appendChild(url);
-          li.appendChild(text);
-          notesList.appendChild(li);
-        });
+        key.active = true;
       }
     }
+
+    // update storage and send it to background.js
+    chrome.storage.session.set({ "selectedText": selectedText });
+    chrome.runtime.sendMessage({ message: selectedText });
+    // rerender the html every time the button is clicked so that correct category is displayed
+    location.reload();
   }
 
   // delete selected notes
@@ -80,7 +89,7 @@
     chrome.storage.session.set({ "selectedText": selectedText });
     // send message to background.js with the new storage data
     chrome.runtime.sendMessage({ message: selectedText });
-    // reload popup on successful delete
+    // rerender popup on successful delete
     location.reload();
   }
   // display the amount of categories on the popup icon
