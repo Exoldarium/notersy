@@ -53,9 +53,9 @@ chrome.runtime.onInstalled.addListener(() => {
         text: text.selectionText,
       }]
     });
-    // add note to session storage
   });
 
+  // add note to session storage
   chrome.contextMenus.onClicked.addListener(async () => {
     chrome.storage.session.set({ "selectedText": arr });
   });
