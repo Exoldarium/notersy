@@ -50,7 +50,7 @@
       return;
     }
 
-    // if the category is clicked set active true, if not set it to false
+    // if the category is clicked set active to true, if not set it to false
     for (const key of selectedText) {
       key.active = false;
       if (e.target.textContent === key.date) {
@@ -93,7 +93,11 @@
     location.reload();
   }
   // display the amount of categories on the popup icon
+  // TODO:
+  // i might be able to use reduce to display the total note count
   await chrome.action.setBadgeText({ text: selectedText.length.toString() });
+  chrome.storage.session.set({ "selectedText": selectedText });
+  chrome.runtime.sendMessage({ message: selectedText });
 
   deleteButton.addEventListener('click', deleteCheckedInput);
   categoryList.addEventListener('click', displayNotesOnCategoryClick);

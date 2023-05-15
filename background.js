@@ -8,11 +8,12 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 (async () => {
-  // initialize empty array to store data
-  const arr = [];
+  // grab data from storage or initialize an empty array if there's nothing in storage
+  const res = await chrome.storage.session.get('selectedText');
+  const arr = res.selectedText || [];
   const date = new Date().toString().slice(0, 15);
 
-  // update local storage with new data from popup.js
+  // update session storage with new data from popup.js
   await chrome.runtime.onMessage.addListener((request) => {
     // check if there is a message
     if (request) {
@@ -52,11 +53,11 @@ chrome.runtime.onInstalled.addListener(() => {
         text: text.selectionText,
       }]
     });
+    // add note to session storage
   });
 
-  // add note to local storage
   chrome.contextMenus.onClicked.addListener(async () => {
-    await chrome.storage.session.set({ "selectedText": arr });
+    chrome.storage.session.set({ "selectedText": arr });
   });
   console.log({ arr });
 })();
