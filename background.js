@@ -14,7 +14,7 @@ chrome.runtime.onInstalled.addListener(() => {
   const date = new Date().toString().slice(0, 15);
 
   // update session storage with new data from popup.js
-  await chrome.runtime.onMessage.addListener((request) => {
+  chrome.runtime.onMessage.addListener((request) => {
     // check if there is a message
     if (request) {
       arr.length = 0; // set array to 0 so that it doesn't add old data when new data is pushed
@@ -23,7 +23,7 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 
   // add new notes on context menu click
-  await chrome.contextMenus.onClicked.addListener((text) => {
+  chrome.contextMenus.onClicked.addListener((text) => {
     // check if key already exists
     for (const key of arr) {
       // by default notes are pushed to the current date category
@@ -56,7 +56,7 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 
   // add note to session storage
-  await chrome.contextMenus.onClicked.addListener(() => {
+  chrome.contextMenus.onClicked.addListener(() => {
     chrome.storage.session.set({ "selectedText": arr });
   });
   console.log({ arr });
