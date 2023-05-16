@@ -3,6 +3,7 @@
   const notesList = document.querySelector(".noteList");
   const categoryList = document.querySelector(".categoryList");
   const deleteButton = document.querySelector(".deleteButton");
+  const newCategory = document.querySelector(".newCategoryButton");
   const selectedText = res.selectedText;
   console.log({ selectedText });
 
@@ -36,6 +37,7 @@
       });
     }
 
+    categoryButton.id = obj.id;
     categoryButton.textContent = obj.date;
     categoryButton.type = 'button';
 
@@ -46,6 +48,7 @@
   // track how many times the button has been clicked, we don't want to duplicate notes
   let counter = 0;
   async function displayNotesOnCategoryClick(e) {
+    console.log(e.target);
     if (counter >= 1) {
       return;
     }
@@ -53,7 +56,7 @@
     // if the category is clicked set active to true, if not set it to false
     for (const key of selectedText) {
       key.active = false;
-      if (e.target.textContent === key.date) {
+      if (e.target.id === key.id) {
         counter += 1;
         key.active = true;
       }
@@ -65,6 +68,9 @@
     // rerender the html every time the button is clicked so that correct category is displayed
     location.reload();
   }
+
+  // TODO:
+  // try moving all the events into a separate file
 
   // delete selected notes
   async function deleteCheckedInput() {
@@ -92,12 +98,13 @@
     // rerender popup on successful delete
     location.reload();
   }
-  // display the amount of categories on the popup icon
+
   // TODO:
   // i might be able to use reduce to display the total note count
+
+  // display the amount of categories on the popup icon
   await chrome.action.setBadgeText({ text: selectedText.length.toString() });
   await chrome.storage.session.set({ "selectedText": selectedText });
-  await chrome.runtime.sendMessage({ message: selectedText });
 
   deleteButton.addEventListener('click', deleteCheckedInput);
   categoryList.addEventListener('click', displayNotesOnCategoryClick);

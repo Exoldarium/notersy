@@ -48,6 +48,8 @@ chrome.runtime.onInstalled.addListener(() => {
     arr.push({
       date: date,
       active: false,
+      id: self.crypto.randomUUID(),
+      name: '',
       note: [{
         url: text.pageUrl,
         text: text.selectionText,
