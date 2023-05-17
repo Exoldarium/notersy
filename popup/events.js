@@ -4,10 +4,24 @@
   const categoryList = document.querySelector(".categoryList");
   const deleteButton = document.querySelector(".deleteButton");
 
+  // TODO:
+  // we could use the active property in renaming categories
+  // the clicked category becomes active and a button appears on reload that will allow user to input a new name
+  // if active then create.element, create the input that will be used to change the name
+  // it should also display a confirm or cancel button
+  // inputing a new name and confirming should reload again 
+
+  // TODO:
+  // adding custom notes could be done separately, through the popup, not through context menu
+  // custom notes can only be added to already created categories
+  // when the category is clicked the button should appear to create a new note
+  // when the button is clicked a textbox is created and the popup is reloaded
+  // the user can input the note in the textbox and when finished confirms the text, reload the popup again to display the note
+  // these custom notes could be saved under a separate name in storage
+
   // track how many times the button has been clicked, we don't want to duplicate notes
   let counter = 0;
   async function displayNotesOnCategoryClick(e) {
-    console.log(e.target);
     if (counter >= 1) {
       return;
     }
@@ -19,6 +33,7 @@
         counter += 1;
         key.active = true;
       }
+      console.log(e.target.id);
     }
 
     // update storage and send it to background.js

@@ -36,7 +36,7 @@
     }
 
     categoryButton.id = obj.id;
-    categoryButton.textContent = obj.date;
+    categoryButton.textContent = obj.name;
     categoryButton.type = 'button';
 
     li.appendChild(categoryButton);

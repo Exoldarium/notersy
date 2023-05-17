@@ -1,11 +1,28 @@
 // add extension to context menu
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
-    "title": "Save a note",
+    "title": "Note taker",
     "contexts": ["selection"],
     "id": "menuItemId",
   });
+  chrome.contextMenus.create({
+    "title": "Add a new note",
+    "contexts": ["selection"],
+    "parentId": "menuItemId",
+    "id": "addNoteId"
+  });
+  chrome.contextMenus.create({
+    "title": "Add a new category",
+    "contexts": ["selection"],
+    "parentId": "menuItemId",
+    "id": "addCategoryId"
+  });
 });
+
+// TODO:
+// we could try adding new categories through the context menu
+// the user could choose to add create a new category or just add the note which will create category with date as title
+// context menu could be something like, add new category, add to currently active category
 
 (async () => {
   // grab data from storage or initialize an empty array if there's nothing in storage
@@ -24,40 +41,47 @@ chrome.runtime.onInstalled.addListener(() => {
 
   // add new notes on context menu click
   chrome.contextMenus.onClicked.addListener((text) => {
-    // check if key already exists
-    for (const key of arr) {
-      // by default notes are pushed to the current date category
-      if (date === key.date) {
-        key.note.push({
-          url: text.pageUrl,
-          text: text.selectionText,
-        });
-        return;
-      }
-      // if category is active (clicked), notes are pushed to that category
-      else if (key.active) {
-        key.note.push({
-          url: text.pageUrl,
-          text: text.selectionText,
-        });
-        return;
-      }
+    // creates a new category
+    if (text.menuItemId === 'addCategoryId') {
+      arr.push({
+        date: date,
+        active: true,
+        id: self.crypto.randomUUID(),
+        name: `New category`,
+        note: []
+      });
     }
 
-    // if it doesn't, create a new key
-    arr.push({
-      date: date,
-      active: false,
-      id: self.crypto.randomUUID(),
-      name: '',
-      note: [{
-        url: text.pageUrl,
-        text: text.selectionText,
-      }]
-    });
+    if (text.menuItemId === 'addNoteId') {
+      // check if key already exists
+      for (const key of arr) {
+        // if category is active (clicked), notes are pushed to that category
+        if (key.active) {
+          key.note.push({
+            url: text.pageUrl,
+            text: text.selectionText,
+          });
+          return;
+        }
+      }
+
+      // if it doesn't, create a new key
+      arr.push({
+        date: date,
+        active: true,
+        id: self.crypto.randomUUID(),
+        name: `New category`,
+        note: [{
+          url: text.pageUrl,
+          text: text.selectionText,
+        }]
+      });
+    }
   });
 
   // add note to session storage
+  // TODO:
+  // don't forget to change to local storage
   chrome.contextMenus.onClicked.addListener(() => {
     chrome.storage.session.set({ "selectedText": arr });
   });
