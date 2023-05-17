@@ -19,11 +19,6 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
-// TODO:
-// we could try adding new categories through the context menu
-// the user could choose to add create a new category or just add the note which will create category with date as title
-// context menu could be something like, add new category, add to currently active category
-
 (async () => {
   // grab data from storage or initialize an empty array if there's nothing in storage
   const res = await chrome.storage.session.get('selectedText');
