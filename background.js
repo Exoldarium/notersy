@@ -1,7 +1,10 @@
+// TODO:
+// add shortcuts to context menu
+
 // add extension to context menu
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
-    "title": "Note taker",
+    "title": "Note Taker",
     "contexts": ["selection"],
     "id": "menuItemId",
   });
@@ -28,7 +31,7 @@ chrome.runtime.onInstalled.addListener(() => {
   // update session storage with new data from popup.js
   chrome.runtime.onMessage.addListener((request) => {
     // check if there is a message
-    if (request) {
+    if (request.message) {
       arr.length = 0; // set array to 0 so that it doesn't add old data when new data is pushed
       arr.push(...request.message);
     }
@@ -41,8 +44,9 @@ chrome.runtime.onInstalled.addListener(() => {
       arr.push({
         date: date,
         active: true,
+        rename: false,
         id: self.crypto.randomUUID(),
-        name: `New category`,
+        name: "New category",
         note: []
       });
     }
@@ -64,8 +68,9 @@ chrome.runtime.onInstalled.addListener(() => {
       arr.push({
         date: date,
         active: true,
+        rename: false,
         id: self.crypto.randomUUID(),
-        name: `New category`,
+        name: "New Category",
         note: [{
           url: text.pageUrl,
           text: text.selectionText,

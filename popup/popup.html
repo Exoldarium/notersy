@@ -9,14 +9,17 @@
 </head>
 
 <body>
+  <!-- some of the elements are only visible when their respective element is clicked -->
   <nav>
     <h1>Notes</h1>
-    <button type="button" class="newCategoryButton">New Category</button>
     <button type="button" class="deleteButton">Delete</button>
+    <form class="renameCategory"></form>
   </nav>
+
   <ul class="categoryList"></ul>
-  <!-- notes are only visible when category is clicked -->
-  <ul class="noteList"></ul>
+  <ul class="noteList">
+  </ul>
+
   <script src="./popup.js" type="module"></script>
   <script src="./events.js" type="module"></script>
 </body>

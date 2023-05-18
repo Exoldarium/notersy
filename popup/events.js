@@ -3,13 +3,7 @@
   const selectedText = res.selectedText;
   const categoryList = document.querySelector(".categoryList");
   const deleteButton = document.querySelector(".deleteButton");
-
-  // TODO:
-  // we could use the active property in renaming categories
-  // the clicked category becomes active and a button appears on reload that will allow user to input a new name
-  // if active then create.element, create the input that will be used to change the name
-  // it should also display a confirm or cancel button
-  // inputing a new name and confirming should reload again 
+  const renameForm = document.querySelector(".renameCategory");
 
   // TODO:
   // adding custom notes could be done separately, through the popup, not through context menu
@@ -29,11 +23,11 @@
     // if the category is clicked set active to true, if not set it to false
     for (const key of selectedText) {
       key.active = false;
+      key.rename = false;
       if (e.target.id === key.id) {
         counter += 1;
         key.active = true;
       }
-      console.log(e.target.id);
     }
 
     // update storage and send it to background.js
@@ -64,12 +58,49 @@
 
     // update session storage
     await chrome.storage.session.set({ "selectedText": selectedText });
-    // send message to background.js with the new storage data
     await chrome.runtime.sendMessage({ message: selectedText });
-    // rerender popup on successful delete
+    location.reload();
+  }
+
+  // renders rename menu on button click
+  async function renameCategory(e) {
+    if (e.target.textContent === 'Set a new name') {
+      for (const key of selectedText) {
+        key.rename = false;
+        if (e.target.id === key.id) {
+          key.rename = true;
+        }
+      }
+    }
+    await chrome.storage.session.set({ "selectedText": selectedText });
+    await chrome.runtime.sendMessage({ message: selectedText });
+  }
+
+  // grabs user input and renames the category
+  async function getRenameInput(e) {
+    e.preventDefault();
+    const input = document.querySelector('input[type="text"]');
+    const submitButton = document.querySelector('.confirmButton');
+
+    if (e.target === submitButton) {
+      requestSubmit(submitButton);
+    }
+
+    // update the category name with new name
+    for (const key of selectedText) {
+      if (key.rename) {
+        key.name = input.value;
+        key.rename = false;
+      }
+    }
+
+    await chrome.storage.session.set({ "selectedText": selectedText });
+    await chrome.runtime.sendMessage({ message: selectedText });
     location.reload();
   }
 
   deleteButton.addEventListener('click', deleteCheckedInput);
   categoryList.addEventListener('click', displayNotesOnCategoryClick);
+  categoryList.addEventListener('click', renameCategory);
+  renameForm.addEventListener('submit', getRenameInput);
 })();
