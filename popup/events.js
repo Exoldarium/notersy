@@ -4,6 +4,7 @@
   const categoryList = document.querySelector(".categoryList");
   const deleteButton = document.querySelector(".deleteButton");
   const renameForm = document.querySelector(".renameCategory");
+  const renameButton = document.querySelector('.renameButton');
 
   // TODO:
   // adding custom notes could be done separately, through the popup, not through context menu
@@ -12,6 +13,9 @@
   // when the button is clicked a textbox is created and the popup is reloaded
   // the user can input the note in the textbox and when finished confirms the text, reload the popup again to display the note
   // these custom notes could be saved under a separate name in storage
+
+  // TODO:
+  // delete button should only show when an item is checked
 
   // track how many times the button has been clicked, we don't want to duplicate notes
   let counter = 0;
@@ -64,20 +68,20 @@
 
   // renders rename menu on button click
   async function renameCategory(e) {
-    if (e.target.textContent === 'Set a new name') {
-      for (const key of selectedText) {
-        key.rename = false;
-        if (e.target.id === key.id) {
-          key.rename = true;
-        }
+    for (const key of selectedText) {
+      key.rename = false;
+      if (key.active) {
+        key.rename = true;
       }
     }
+
     await chrome.storage.session.set({ "selectedText": selectedText });
     await chrome.runtime.sendMessage({ message: selectedText });
+    location.reload();
   }
 
   // grabs user input and renames the category
-  async function getRenameInput(e) {
+  async function submitNewName(e) {
     e.preventDefault();
     const input = document.querySelector('input[type="text"]');
     const submitButton = document.querySelector('.confirmButton');
@@ -101,6 +105,6 @@
 
   deleteButton.addEventListener('click', deleteCheckedInput);
   categoryList.addEventListener('click', displayNotesOnCategoryClick);
-  categoryList.addEventListener('click', renameCategory);
-  renameForm.addEventListener('submit', getRenameInput);
+  renameButton.addEventListener('click', renameCategory);
+  renameForm.addEventListener('submit', submitNewName);
 })();

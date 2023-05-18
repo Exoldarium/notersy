@@ -10,7 +10,6 @@
   selectedText.map(obj => {
     const categoryItem = document.createElement('li');
     const categoryButton = document.createElement('button');
-    const renameButton = document.createElement('button');
 
     // display only the notes from the category that has been clicked
     if (obj.active) {
@@ -55,12 +54,8 @@
     categoryButton.id = obj.id;
     categoryButton.textContent = obj.name;
     categoryButton.type = 'button';
-    renameButton.id = obj.id;
-    renameButton.textContent = 'Set a new name';
-    renameButton.type = 'button';
 
     categoryItem.appendChild(categoryButton);
-    categoryItem.appendChild(renameButton);
     categoryList.appendChild(categoryItem);
   });
 
