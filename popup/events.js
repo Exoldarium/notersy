@@ -107,6 +107,7 @@
     location.reload();
   }
 
+  // allow user to add custom notes
   async function addCustomNote() {
     for (const key of selectedText) {
       key.customNote = false;
@@ -120,18 +121,17 @@
     location.reload();
   }
 
+  // add custom note input value to local storage
   async function submitCustomNote(e) {
     e.preventDefault();
     const titleInput = document.querySelector('.titleInput');
     const textInput = document.querySelector('.textInput');
     const submitButton = document.querySelector('.confirmNoteButton');
-    console.log(titleInput);
 
     if (e.target === submitButton) {
       requestSubmit(submitButton);
     }
 
-    // update the category name with new name
     for (const key of selectedText) {
       if (key.customNote && key.active) {
         key.note.push({

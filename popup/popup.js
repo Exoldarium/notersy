@@ -57,6 +57,7 @@
       renameForm.appendChild(confirmButton);
     }
 
+    // check if the user wants to add a custom note
     if (obj.customNote) {
       customTitleInput.type = 'text';
       customTitleInput.id = obj.id;
