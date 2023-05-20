@@ -27,7 +27,11 @@
         const checkbox = document.createElement('input');
         const link = document.createElement('a');
 
-        link.textContent = obj.title;
+        if (obj.title.length >= 25) {
+          link.textContent = obj.title.slice(0, 25) + '...';
+        } else {
+          link.textContent = obj.title;
+        }
         link.href = obj.title;
         link.target = "_blank";
         link.rel = "noopener noreferrer";
