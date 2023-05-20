@@ -9,14 +9,6 @@
   const createNewNoteButton = document.querySelector('.createNewNoteButton');
 
   // TODO:
-  // adding custom notes could be done separately, through the popup, not through context menu
-  // custom notes can only be added to already created categories
-  // when the category is clicked the button should appear to create a new note
-  // when the button is clicked a textbox/input is created and the popup is reloaded
-  // the user can input the note in the textbox and when finished confirms the text, reload the popup again to display the note
-  // we could make a div that would contain our notes lists and custom notes list elements
-
-  // TODO:
   // delete button should only show when an item is checked
 
   // track how many times the button has been clicked, we don't want to duplicate notes
