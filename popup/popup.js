@@ -4,7 +4,14 @@
   const notesList = document.querySelector(".noteList");
   const categoryList = document.querySelector(".categoryList");
   const renameForm = document.querySelector(".renameCategory");
+  const createNewNote = document.querySelector(".createNewNote");
+  const customNoteInput = document.createElement('input');
+  const customTitleInput = document.createElement('input');
+  const customNoteButton = document.createElement('button');
   console.log({ selectedText });
+
+  // TODO:
+  // custom colours for categories, use input type color
 
   // create categories and add data to DOM
   selectedText.map(obj => {
@@ -20,8 +27,8 @@
         const checkbox = document.createElement('input');
         const link = document.createElement('a');
 
-        link.textContent = new URL(obj.url).hostname;
-        link.href = obj.url;
+        link.textContent = obj.title;
+        link.href = obj.title;
         link.target = "_blank";
         link.rel = "noopener noreferrer";
         text.textContent = obj.text;
@@ -34,7 +41,6 @@
         notesItem.appendChild(text);
         notesList.appendChild(notesItem);
       });
-
     }
 
     // check if the rename property is true, if it is allow user to rename category
@@ -49,6 +55,27 @@
 
       renameForm.appendChild(renameInput);
       renameForm.appendChild(confirmButton);
+    }
+
+    if (obj.customNote) {
+      customTitleInput.type = 'text';
+      customTitleInput.id = obj.id;
+      customTitleInput.className = 'titleInput';
+      customTitleInput.required = true;
+      customTitleInput.placeholder = "Note Title";
+      customNoteInput.placeholder = "Note Text";
+      customNoteInput.type = 'text';
+      customNoteInput.id = obj.id;
+      customNoteInput.required = true;
+      customNoteInput.className = "textInput";
+      customNoteButton.id = obj.id
+      customNoteButton.type = 'submit';
+      customNoteButton.textContent = 'Add Note';
+      customNoteButton.className = 'confirmNoteButton';
+
+      createNewNote.appendChild(customTitleInput);
+      createNewNote.appendChild(customNoteButton);
+      createNewNote.appendChild(customNoteInput);
     }
 
     categoryButton.id = obj.id;

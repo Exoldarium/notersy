@@ -45,6 +45,7 @@ chrome.runtime.onInstalled.addListener(() => {
         date: date,
         active: true,
         rename: false,
+        customNote: false,
         id: self.crypto.randomUUID(),
         name: "New category",
         note: []
@@ -57,7 +58,7 @@ chrome.runtime.onInstalled.addListener(() => {
         // if category is active (clicked), notes are pushed to that category
         if (key.active) {
           key.note.push({
-            url: text.pageUrl,
+            title: text.pageUrl,
             text: text.selectionText,
           });
           return;
@@ -69,10 +70,11 @@ chrome.runtime.onInstalled.addListener(() => {
         date: date,
         active: true,
         rename: false,
+        customNote: false,
         id: self.crypto.randomUUID(),
         name: "New Category",
         note: [{
-          url: text.pageUrl,
+          title: text.pageUrl,
           text: text.selectionText,
         }]
       });

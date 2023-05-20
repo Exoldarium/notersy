@@ -5,14 +5,16 @@
   const deleteButton = document.querySelector(".deleteButton");
   const renameForm = document.querySelector(".renameCategory");
   const renameButton = document.querySelector('.renameButton');
+  const createNewNote = document.querySelector('.createNewNote');
+  const createNewNoteButton = document.querySelector('.createNewNoteButton');
 
   // TODO:
   // adding custom notes could be done separately, through the popup, not through context menu
   // custom notes can only be added to already created categories
   // when the category is clicked the button should appear to create a new note
-  // when the button is clicked a textbox is created and the popup is reloaded
+  // when the button is clicked a textbox/input is created and the popup is reloaded
   // the user can input the note in the textbox and when finished confirms the text, reload the popup again to display the note
-  // these custom notes could be saved under a separate name in storage
+  // we could make a div that would contain our notes lists and custom notes list elements
 
   // TODO:
   // delete button should only show when an item is checked
@@ -28,6 +30,7 @@
     for (const key of selectedText) {
       key.active = false;
       key.rename = false;
+      key.customNote = false;
       if (e.target.id === key.id) {
         counter += 1;
         key.active = true;
@@ -44,6 +47,7 @@
   // delete selected notes
   async function deleteCheckedInput() {
     const input = document.querySelectorAll('input[type="checkbox"]');
+
     input.forEach(input => {
       // check if input is checked
       if (input.checked) {
@@ -67,7 +71,7 @@
   }
 
   // renders rename menu on button click
-  async function renameCategory(e) {
+  async function renameCategory() {
     for (const key of selectedText) {
       key.rename = false;
       if (key.active) {
@@ -103,8 +107,49 @@
     location.reload();
   }
 
+  async function addCustomNote() {
+    for (const key of selectedText) {
+      key.customNote = false;
+      if (key.active) {
+        key.customNote = true;
+      }
+    }
+
+    await chrome.storage.session.set({ "selectedText": selectedText });
+    await chrome.runtime.sendMessage({ message: selectedText });
+    location.reload();
+  }
+
+  async function submitCustomNote(e) {
+    e.preventDefault();
+    const titleInput = document.querySelector('.titleInput');
+    const textInput = document.querySelector('.textInput');
+    const submitButton = document.querySelector('.confirmNoteButton');
+    console.log(titleInput);
+
+    if (e.target === submitButton) {
+      requestSubmit(submitButton);
+    }
+
+    // update the category name with new name
+    for (const key of selectedText) {
+      if (key.customNote && key.active) {
+        key.note.push({
+          title: titleInput.value,
+          text: textInput.value,
+        });
+        key.customNote = false;
+      }
+    }
+    await chrome.storage.session.set({ "selectedText": selectedText });
+    await chrome.runtime.sendMessage({ message: selectedText });
+    location.reload();
+  }
+
   deleteButton.addEventListener('click', deleteCheckedInput);
   categoryList.addEventListener('click', displayNotesOnCategoryClick);
   renameButton.addEventListener('click', renameCategory);
+  createNewNoteButton.addEventListener('click', addCustomNote);
   renameForm.addEventListener('submit', submitNewName);
+  createNewNote.addEventListener('submit', submitCustomNote);
 })();
