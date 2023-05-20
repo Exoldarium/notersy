@@ -2,14 +2,12 @@
   const res = await chrome.storage.session.get('selectedText');
   const selectedText = res.selectedText;
   const categoryList = document.querySelector(".categoryList");
-  const deleteButton = document.querySelector(".deleteButton");
+  const deleteNotesButton = document.querySelector(".deleteNotesButton");
+  const deleteCategoryButton = document.querySelector(".deleteCategoryButton");
   const renameForm = document.querySelector(".renameCategory");
   const renameButton = document.querySelector('.renameButton');
   const createNewNote = document.querySelector('.createNewNote');
   const createNewNoteButton = document.querySelector('.createNewNoteButton');
-
-  // TODO:
-  // delete button should only show when an item is checked
 
   // track how many times the button has been clicked, we don't want to duplicate notes
   let counter = 0;
@@ -57,6 +55,22 @@
     });
 
     // update session storage
+    await chrome.storage.session.set({ "selectedText": selectedText });
+    await chrome.runtime.sendMessage({ message: selectedText });
+    location.reload();
+  }
+
+  // deletes active category
+  async function deleteCategory() {
+    for (const keys of selectedText) {
+      if (keys.active) {
+        if (window.confirm(`Are you sure you want to delete ${keys.name} and all the notes in it?`)) {
+          const index = selectedText.indexOf(keys);
+          selectedText.splice(index, 1);
+        }
+      }
+    }
+
     await chrome.storage.session.set({ "selectedText": selectedText });
     await chrome.runtime.sendMessage({ message: selectedText });
     location.reload();
@@ -138,7 +152,8 @@
     location.reload();
   }
 
-  deleteButton.addEventListener('click', deleteCheckedInput);
+  deleteNotesButton.addEventListener('click', deleteCheckedInput);
+  deleteCategoryButton.addEventListener('click', deleteCategory);
   categoryList.addEventListener('click', displayNotesOnCategoryClick);
   renameButton.addEventListener('click', renameCategory);
   createNewNoteButton.addEventListener('click', addCustomNote);

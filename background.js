@@ -1,5 +1,5 @@
 // TODO:
-// add shortcuts to context menu
+// add shortcuts keybinds to context menu
 
 // add extension to context menu
 chrome.runtime.onInstalled.addListener(() => {
