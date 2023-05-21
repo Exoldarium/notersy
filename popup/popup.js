@@ -23,7 +23,7 @@
 
     // display only the notes from the category that has been clicked
     if (obj.active) {
-      categoryButton.style.background = '#EDDD6E';
+      categoryButton.style.background = '#96adfc';
 
       obj.note.map(obj => {
         const url = document.createElement('h2');
@@ -63,7 +63,7 @@
 
       renameInput.type = 'text';
       confirmButton.type = 'submit';
-      confirmButton.textContent = 'T';
+      confirmButton.textContent = 'Confirm';
       confirmButton.className = 'confirmButton';
 
       renameForm.appendChild(renameInput);
