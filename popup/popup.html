@@ -12,16 +12,18 @@
   <!-- some of the elements are only visible when their respective element is clicked -->
   <nav>
     <h1>Notes</h1>
-    <button type="button" class="renameButton">Set a new name</button>
+    <button type="button" class="renameButton">Change active category name</button>
     <button type="button" class="createNewNoteButton">Create a custom note</button>
-    <button type="button" class="deleteNotesButton">Delete Notes</button>
-    <button type="button" class="deleteCategoryButton">Delete Category</button>
+    <button type="button" class="deleteNotesButton">Delete selected notes</button>
+    <button type="button" class="deleteCategoryButton">Delete category</button>
   </nav>
 
-  <form class="renameCategory"></form>
-  <ul class="categoryList"></ul>
-  <form class="createNewNote"></form>
-  <ul class="noteList"></ul>
+  <div>
+    <form class="renameCategory"></form>
+    <ul class="categoryList"></ul>
+    <form class="createNewNote"></form>
+    <ul class="noteList"></ul>
+  </div>
 
   <script src="./popup.js" type="module"></script>
   <script src="./events.js" type="module"></script>

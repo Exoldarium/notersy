@@ -20,12 +20,15 @@
 
     // display only the notes from the category that has been clicked
     if (obj.active) {
+      categoryButton.style.background = '#96adfc';
+
       obj.note.map(obj => {
         const url = document.createElement('h2');
         const text = document.createElement('p');
         const notesItem = document.createElement('li');
         const checkbox = document.createElement('input');
         const link = document.createElement('a');
+        const div = document.createElement('div');
 
         // truncate note title
         if (obj.title.length >= 25) {
@@ -41,9 +44,10 @@
         checkbox.type = 'checkbox';
         checkbox.id = obj.text;
 
-        notesItem.appendChild(checkbox);
         url.appendChild(link);
-        notesItem.appendChild(url);
+        div.appendChild(url);
+        div.appendChild(checkbox)
+        notesItem.appendChild(div);
         notesItem.appendChild(text);
         notesList.appendChild(notesItem);
       });
@@ -68,12 +72,10 @@
       customTitleInput.type = 'text';
       customTitleInput.id = obj.id;
       customTitleInput.className = 'titleInput';
-      customTitleInput.required = true;
       customTitleInput.placeholder = "Note Title";
       customNoteInput.placeholder = "Note Text";
       customNoteInput.type = 'text';
       customNoteInput.id = obj.id;
-      customNoteInput.required = true;
       customNoteInput.className = "textInput";
       customNoteButton.id = obj.id
       customNoteButton.type = 'submit';
@@ -81,13 +83,14 @@
       customNoteButton.className = 'confirmNoteButton';
 
       createNewNote.appendChild(customTitleInput);
-      createNewNote.appendChild(customNoteButton);
       createNewNote.appendChild(customNoteInput);
+      createNewNote.appendChild(customNoteButton);
     }
 
     categoryButton.id = obj.id;
     categoryButton.textContent = obj.name;
     categoryButton.type = 'button';
+    categoryButton.className = 'categoryButton';
 
     categoryItem.appendChild(categoryButton);
     categoryList.appendChild(categoryItem);

@@ -1,15 +1,72 @@
 body {
-  width: 20rem;
+  margin: 0;
+  font-family: --apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
-ul {
+div {
+  width: 30rem;
+  padding: 0.5rem;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.categoryList {
+  display: flex;
+  flex-wrap: wrap;
   list-style-type: none;
-  padding-inline-start: 0;
-  margin: 1rem 0;
+  margin: 0;
+  list-style: none;
+  padding: 0;
+  width: fit-content;
 }
 
-li {
-  padding: 0.25rem;
+.noteList {
+  list-style: none;
+  width: inherit;
+  padding: 0;
+}
+
+.noteList>li {
+  margin-bottom: 0.5rem;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.3);
+  border-radius: 5px;
+}
+
+.noteList>li>div {
+  display: flex;
+  width: inherit;
+  padding: 0.2rem;
+}
+
+.noteList>li>div>h2 {
+  flex: 1;
+}
+
+.noteList>li>p {
+  padding: 0.2rem;
+  font-size: 14px;
+}
+
+.categoryList>li {
+  width: fit-content;
+  height: fit-content;
+  padding: 0;
+  margin: 0.2rem;
+  border-radius: 7px;
+  border: none;
+}
+
+.categoryList>li>button {
+  border-radius: 7px;
+  border: none;
+  height: 1.5rem;
+  background: #EDDD6E;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.3);
+  font-size: 13px;
 }
 
 li:nth-child(odd) {

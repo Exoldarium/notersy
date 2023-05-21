@@ -22,6 +22,9 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
+// TODO:
+// only the first category should be active unless to user specifises which one is active
+
 (async () => {
   // grab data from storage or initialize an empty array if there's nothing in storage
   const res = await chrome.storage.session.get('selectedText');
@@ -43,7 +46,7 @@ chrome.runtime.onInstalled.addListener(() => {
     if (text.menuItemId === 'addCategoryId') {
       arr.push({
         date: date,
-        active: true,
+        active: false,
         rename: false,
         customNote: false,
         id: self.crypto.randomUUID(),

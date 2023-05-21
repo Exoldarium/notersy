@@ -9,6 +9,11 @@
   const createNewNote = document.querySelector('.createNewNote');
   const createNewNoteButton = document.querySelector('.createNewNoteButton');
 
+  // TODO:
+  // add a color picker but limit it to only some optimizied colors that won't clash with the design
+  // TODO: 
+  // add a way to edit custom notes
+
   // track how many times the button has been clicked, we don't want to duplicate notes
   let counter = 0;
   async function displayNotesOnCategoryClick(e) {
@@ -147,6 +152,7 @@
         key.customNote = false;
       }
     }
+
     await chrome.storage.session.set({ "selectedText": selectedText });
     await chrome.runtime.sendMessage({ message: selectedText });
     location.reload();
