@@ -5,13 +5,16 @@
   const categoryList = document.querySelector(".categoryList");
   const renameForm = document.querySelector(".renameCategory");
   const createNewNote = document.querySelector(".createNewNote");
-  const customNoteInput = document.createElement('input');
+  const customNoteInput = document.createElement('textarea');
   const customTitleInput = document.createElement('input');
   const customNoteButton = document.createElement('button');
   console.log({ selectedText });
 
   // TODO:
   // custom colours for categories, use input type color
+
+  // TODO:
+  // we could try to check if the link is url by checking for https, if it is url add it to link if not just add to normal header
 
   // create categories and add data to DOM
   selectedText.map(obj => {
@@ -20,7 +23,7 @@
 
     // display only the notes from the category that has been clicked
     if (obj.active) {
-      categoryButton.style.background = '#96adfc';
+      categoryButton.style.background = '#EDDD6E';
 
       obj.note.map(obj => {
         const url = document.createElement('h2');
@@ -73,13 +76,12 @@
       customTitleInput.id = obj.id;
       customTitleInput.className = 'titleInput';
       customTitleInput.placeholder = "Note Title";
-      customNoteInput.placeholder = "Note Text";
-      customNoteInput.type = 'text';
+      // customNoteInput.type = 'text';
       customNoteInput.id = obj.id;
       customNoteInput.className = "textInput";
       customNoteButton.id = obj.id
       customNoteButton.type = 'submit';
-      customNoteButton.textContent = 'Add Note';
+      customNoteButton.textContent = 'Add';
       customNoteButton.className = 'confirmNoteButton';
 
       createNewNote.appendChild(customTitleInput);

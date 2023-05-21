@@ -1,6 +1,7 @@
 body {
   margin: 0;
   font-family: --apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background: #b5c689;
 }
 
 div {
@@ -13,14 +14,27 @@ a {
   color: black;
 }
 
+button {
+  cursor: pointer;
+}
+
+nav {
+  padding: 0.5rem;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.3);
+}
+
 .categoryList {
   display: flex;
   flex-wrap: wrap;
   list-style-type: none;
-  margin: 0;
+  margin-bottom: 1rem;
   list-style: none;
   padding: 0;
   width: fit-content;
+}
+
+input[type="checkbox"] {
+  cursor: pointer;
 }
 
 .noteList {
@@ -30,7 +44,7 @@ a {
 }
 
 .noteList>li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.7rem;
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.3);
   border-radius: 5px;
 }
@@ -63,21 +77,45 @@ a {
   border-radius: 7px;
   border: none;
   height: 1.5rem;
-  background: #EDDD6E;
+  background: #96adfc;
   cursor: pointer;
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.3);
   font-size: 13px;
 }
 
 li:nth-child(odd) {
-  background: #80808030;
+  background: #EDDD6E;
 }
 
 li:nth-child(even) {
-  background: #ffffff;
+  background: #EDDD6E;
 }
 
 h3,
 p {
   margin: 0;
+}
+
+.createNewNote {
+  display: flex;
+  flex-direction: column;
+}
+
+.createNewNote>button {
+  width: 3.5rem;
+}
+
+.titleInput {
+  height: 1.5rem;
+  width: 50%;
+  border-radius: 5px;
+  border: 1px solid black;
+  margin-bottom: 0.5rem;
+}
+
+.textInput {
+  height: 5rem;
+  max-width: 30rem;
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
 }
