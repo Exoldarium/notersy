@@ -39,7 +39,7 @@
     await chrome.storage.session.set({ "selectedText": selectedText });
     await chrome.runtime.sendMessage({ message: selectedText });
     // rerender the html every time the button is clicked so that correct category is displayed
-    // location.reload();
+    location.reload();
   }
 
   // delete selected notes
