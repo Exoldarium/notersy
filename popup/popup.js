@@ -1,20 +1,23 @@
 (async () => {
   const res = await chrome.storage.session.get('selectedText');
-  const selectedText = res.selectedText;
+  const storedNoteRes = await chrome.storage.session.get('storedNote');
+  const selectedText = res.selectedText || [];
   const notesList = document.querySelector(".noteList");
   const categoryList = document.querySelector(".categoryList");
   const renameForm = document.querySelector(".renameCategory");
   const createNewNote = document.querySelector(".createNewNote");
+  const createNewNoteButton = document.querySelector('.createNewNoteButton');
   const customNoteInput = document.createElement('textarea');
   const customTitleInput = document.createElement('input');
   const customNoteButton = document.createElement('button');
   console.log({ selectedText });
 
   // TODO:
-  // custom colours for categories, use input type color
-
-  // TODO:
   // we could try to check if the link is url by checking for https, if it is url add it to link if not just add to normal header
+
+  if (selectedText.length === 0) {
+    createNewNoteButton.style.display = 'none';
+  }
 
   // create categories and add data to DOM
   selectedText.map(obj => {
@@ -32,6 +35,7 @@
         const checkbox = document.createElement('input');
         const link = document.createElement('a');
         const div = document.createElement('div');
+        const editButton = document.createElement('button');
 
         // truncate note title
         if (obj.title.length >= 25) {
@@ -46,15 +50,20 @@
         text.textContent = obj.text;
         checkbox.type = 'checkbox';
         checkbox.id = obj.text;
+        editButton.textContent = 'Edit';
+        editButton.id = obj.id;
+        editButton.className = 'editButton';
 
         url.appendChild(link);
         div.appendChild(url);
+        div.appendChild(editButton);
         div.appendChild(checkbox)
         notesItem.appendChild(div);
         notesItem.appendChild(text);
         notesList.appendChild(notesItem);
       });
     }
+
 
     // check if the rename property is true, if it is allow user to rename category
     if (obj.rename) {
@@ -76,7 +85,6 @@
       customTitleInput.id = obj.id;
       customTitleInput.className = 'titleInput';
       customTitleInput.placeholder = "Note Title";
-      // customNoteInput.type = 'text';
       customNoteInput.id = obj.id;
       customNoteInput.className = "textInput";
       customNoteButton.id = obj.id
@@ -87,6 +95,14 @@
       createNewNote.appendChild(customTitleInput);
       createNewNote.appendChild(customNoteInput);
       createNewNote.appendChild(customNoteButton);
+    }
+
+    // grab values from storage if edit property is true and add them to input and textarea
+    for (const key of obj.note) {
+      if (key.edit) {
+        customTitleInput.value = storedNoteRes.storedNote.title;
+        customNoteInput.value = storedNoteRes.storedNote.text;
+      }
     }
 
     categoryButton.id = obj.id;

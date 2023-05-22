@@ -39,7 +39,7 @@ nav>button {
   display: flex;
   flex-wrap: wrap;
   list-style-type: none;
-  margin-bottom: 1rem;
+  margin-bottom: 0;
   list-style: none;
   padding: 0;
   width: fit-content;

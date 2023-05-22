@@ -1,6 +1,3 @@
-// TODO:
-// add shortcuts keybinds to context menu
-
 // add extension to context menu
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
@@ -21,9 +18,6 @@ chrome.runtime.onInstalled.addListener(() => {
     "id": "addCategoryId"
   });
 });
-
-// TODO:
-// only the first category should be active unless to user specifises which one is active
 
 (async () => {
   // grab data from storage or initialize an empty array if there's nothing in storage
@@ -49,6 +43,7 @@ chrome.runtime.onInstalled.addListener(() => {
         active: false,
         rename: false,
         customNote: false,
+        editNote: false,
         id: self.crypto.randomUUID(),
         name: "New category",
         note: []
@@ -61,6 +56,8 @@ chrome.runtime.onInstalled.addListener(() => {
         // if category is active (clicked), notes are pushed to that category
         if (key.active) {
           key.note.push({
+            id: self.crypto.randomUUID(),
+            edit: false,
             title: text.pageUrl,
             text: text.selectionText,
           });
@@ -74,9 +71,12 @@ chrome.runtime.onInstalled.addListener(() => {
         active: true,
         rename: false,
         customNote: false,
+        editNote: false,
         id: self.crypto.randomUUID(),
         name: "New Category",
         note: [{
+          id: self.crypto.randomUUID(),
+          edit: false,
           title: text.pageUrl,
           text: text.selectionText,
         }]
