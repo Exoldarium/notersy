@@ -1,6 +1,6 @@
 (async () => {
-  const res = await chrome.storage.session.get('selectedText');
-  const storedNoteRes = await chrome.storage.session.get('storedNote');
+  const res = await chrome.storage.local.get('selectedText');
+  const storedNoteRes = await chrome.storage.local.get('storedNote');
   const selectedText = res.selectedText || [];
   const notesList = document.querySelector(".noteList");
   const categoryList = document.querySelector(".categoryList");
@@ -119,5 +119,5 @@
 
   // display the amount of categories on the popup icon
   await chrome.action.setBadgeText({ text: selectedText.length.toString() });
-  await chrome.storage.session.set({ "selectedText": selectedText });
+  await chrome.storage.local.set({ "selectedText": selectedText });
 })();

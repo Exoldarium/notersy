@@ -1,5 +1,5 @@
 (async () => {
-  const res = await chrome.storage.session.get('selectedText');
+  const res = await chrome.storage.local.get('selectedText');
   const selectedText = res.selectedText;
   const categoryList = document.querySelector(".categoryList");
   const deleteNotesButton = document.querySelector(".deleteNotesButton");
@@ -36,7 +36,7 @@
     }
 
     // update storage and send it to background.js
-    await chrome.storage.session.set({ "selectedText": selectedText });
+    await chrome.storage.local.set({ "selectedText": selectedText });
     await chrome.runtime.sendMessage({ message: selectedText });
     // rerender the html every time the button is clicked so that correct category is displayed
     location.reload();
@@ -62,8 +62,8 @@
       }
     });
 
-    // update session storage
-    await chrome.storage.session.set({ "selectedText": selectedText });
+    // update local storage
+    await chrome.storage.local.set({ "selectedText": selectedText });
     await chrome.runtime.sendMessage({ message: selectedText });
     location.reload();
   }
@@ -79,7 +79,7 @@
       }
     }
 
-    await chrome.storage.session.set({ "selectedText": selectedText });
+    await chrome.storage.local.set({ "selectedText": selectedText });
     await chrome.runtime.sendMessage({ message: selectedText });
     location.reload();
   }
@@ -93,7 +93,7 @@
       }
     }
 
-    await chrome.storage.session.set({ "selectedText": selectedText });
+    await chrome.storage.local.set({ "selectedText": selectedText });
     await chrome.runtime.sendMessage({ message: selectedText });
     location.reload();
   }
@@ -116,7 +116,7 @@
       }
     }
 
-    await chrome.storage.session.set({ "selectedText": selectedText });
+    await chrome.storage.local.set({ "selectedText": selectedText });
     await chrome.runtime.sendMessage({ message: selectedText });
     location.reload();
   }
@@ -130,7 +130,7 @@
       }
     }
 
-    await chrome.storage.session.set({ "selectedText": selectedText });
+    await chrome.storage.local.set({ "selectedText": selectedText });
     await chrome.runtime.sendMessage({ message: selectedText });
     location.reload();
   }
@@ -173,7 +173,7 @@
       }
     }
 
-    await chrome.storage.session.set({ "selectedText": selectedText });
+    await chrome.storage.local.set({ "selectedText": selectedText });
     await chrome.runtime.sendMessage({ message: selectedText });
     location.reload();
   }
@@ -189,7 +189,7 @@
           key.edit = true;
 
           // add the text and title values to storage
-          chrome.storage.session.set({
+          chrome.storage.local.set({
             "storedNote": {
               id: key.id,
               title: key.title,
@@ -201,7 +201,7 @@
       }
     }
 
-    await chrome.storage.session.set({ "selectedText": selectedText });
+    await chrome.storage.local.set({ "selectedText": selectedText });
     await chrome.runtime.sendMessage({ message: selectedText });
   }
 
