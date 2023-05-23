@@ -1,6 +1,6 @@
 (async () => {
   const res = await chrome.storage.local.get('selectedText');
-  const selectedText = res.selectedText || [];
+  const selectedText = res.selectedText;
   const categoryList = document.querySelector(".categoryList");
   const deleteNotesButton = document.querySelector(".deleteNotesButton");
   const deleteCategoryButton = document.querySelector(".deleteCategoryButton");
@@ -18,7 +18,7 @@
 
   // track how many times the button has been clicked, we don't want to duplicate notes
   let counter = 0;
-  async function displayNotesOnCategoryClick(e) {
+  function displayNotesOnCategoryClick(e) {
     if (counter >= 1) {
       return;
     }
@@ -36,14 +36,13 @@
     }
 
     // update storage and send it to background.js
-    await chrome.storage.local.set({ "selectedText": selectedText });
-    await chrome.runtime.sendMessage({ message: selectedText });
+    chrome.storage.local.set({ "selectedText": selectedText });
     // rerender the html every time the button is clicked so that correct category is displayed
     location.reload();
   }
 
   // delete selected notes
-  async function deleteCheckedInput() {
+  function deleteCheckedInput() {
     const input = document.querySelectorAll('input[type="checkbox"]');
 
     input.forEach(input => {
@@ -63,13 +62,12 @@
     });
 
     // update local storage
-    await chrome.storage.local.set({ "selectedText": selectedText });
-    await chrome.runtime.sendMessage({ message: selectedText });
+    chrome.storage.local.set({ "selectedText": selectedText });
     location.reload();
   }
 
   // deletes active category
-  async function deleteCategory() {
+  function deleteCategory() {
     for (const keys of selectedText) {
       if (keys.active) {
         if (window.confirm(`Are you sure you want to delete ${keys.name} and all the notes in it?`)) {
@@ -79,13 +77,12 @@
       }
     }
 
-    await chrome.storage.local.set({ "selectedText": selectedText });
-    await chrome.runtime.sendMessage({ message: selectedText });
+    chrome.storage.local.set({ "selectedText": selectedText });
     location.reload();
   }
 
   // renders rename menu on button click
-  async function renameCategory() {
+  function renameCategory() {
     for (const key of selectedText) {
       key.rename = false;
       if (key.active) {
@@ -93,13 +90,12 @@
       }
     }
 
-    await chrome.storage.local.set({ "selectedText": selectedText });
-    await chrome.runtime.sendMessage({ message: selectedText });
+    chrome.storage.local.set({ "selectedText": selectedText });
     location.reload();
   }
 
   // grabs user input and renames the category
-  async function submitNewName(e) {
+  function submitNewName(e) {
     e.preventDefault();
     const input = document.querySelector('input[type="text"]');
     const submitButton = document.querySelector('.confirmButton');
@@ -116,13 +112,12 @@
       }
     }
 
-    await chrome.storage.local.set({ "selectedText": selectedText });
-    await chrome.runtime.sendMessage({ message: selectedText });
+    chrome.storage.local.set({ "selectedText": selectedText });
     location.reload();
   }
 
   // allow user to add custom notes
-  async function addCustomNote() {
+  function addCustomNote() {
     for (const keys of selectedText) {
       keys.customNote = false;
       if (keys.active) {
@@ -130,13 +125,12 @@
       }
     }
 
-    await chrome.storage.local.set({ "selectedText": selectedText });
-    await chrome.runtime.sendMessage({ message: selectedText });
+    chrome.storage.local.set({ "selectedText": selectedText });
     location.reload();
   }
 
   // add custom note input value to local storage or allow user to edit note
-  async function submitCustomNote(e) {
+  function submitCustomNote(e) {
     e.preventDefault();
     const titleInput = document.querySelector('.titleInput');
     const textInput = document.querySelector('.textInput');
@@ -173,13 +167,12 @@
       }
     }
 
-    await chrome.storage.local.set({ "selectedText": selectedText });
-    await chrome.runtime.sendMessage({ message: selectedText });
+    chrome.storage.local.set({ "selectedText": selectedText });
     location.reload();
   }
 
   // allows user to edit the note
-  async function editNote(e) {
+  function editNote(e) {
     for (const keys of selectedText) {
       for (const key of keys.note) {
         key.edit = false;
@@ -201,9 +194,10 @@
       }
     }
 
-    await chrome.storage.local.set({ "selectedText": selectedText });
-    await chrome.runtime.sendMessage({ message: selectedText });
+    chrome.storage.local.set({ "selectedText": selectedText });
   }
+
+  chrome.runtime.sendMessage({ message: selectedText });
 
   deleteNotesButton.addEventListener('click', deleteCheckedInput);
   deleteCategoryButton.addEventListener('click', deleteCategory);

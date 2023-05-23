@@ -1,7 +1,7 @@
 (async () => {
   const res = await chrome.storage.local.get('selectedText');
   const storedNoteRes = await chrome.storage.local.get('storedNote');
-  const selectedText = res.selectedText || [];
+  const selectedText = res.selectedText;
   const notesList = document.querySelector(".noteList");
   const categoryList = document.querySelector(".categoryList");
   const renameForm = document.querySelector(".renameCategory");
@@ -11,9 +11,6 @@
   const customTitleInput = document.createElement('input');
   const customNoteButton = document.createElement('button');
   console.log({ selectedText });
-
-  // TODO:
-  // we could try to check if the link is url by checking for https, if it is url add it to link if not just add to normal header
 
   if (selectedText.length === 0) {
     createNewNoteButton.style.display = 'none';
@@ -120,6 +117,6 @@
   // i might be able to use reduce to display the total note count
 
   // display the amount of categories on the popup icon
-  await chrome.action.setBadgeText({ text: selectedText.length.toString() });
-  await chrome.storage.local.set({ "selectedText": selectedText });
+  chrome.action.setBadgeText({ text: selectedText.length.toString() });
+  chrome.storage.local.set({ "selectedText": selectedText });
 })();
