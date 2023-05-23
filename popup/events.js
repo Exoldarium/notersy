@@ -1,6 +1,7 @@
 (async () => {
   const res = await chrome.storage.local.get('selectedText');
-  const selectedText = res.selectedText;
+  const selectedText = res.selectedText || [];
+
   const categoryList = document.querySelector(".categoryList");
   const deleteNotesButton = document.querySelector(".deleteNotesButton");
   const deleteCategoryButton = document.querySelector(".deleteCategoryButton");

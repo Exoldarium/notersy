@@ -1,12 +1,15 @@
 (async () => {
   const res = await chrome.storage.local.get('selectedText');
   const storedNoteRes = await chrome.storage.local.get('storedNote');
-  const selectedText = res.selectedText;
+  const selectedText = res.selectedText || [];
+
   const notesList = document.querySelector(".noteList");
   const categoryList = document.querySelector(".categoryList");
   const renameForm = document.querySelector(".renameCategory");
   const createNewNote = document.querySelector(".createNewNote");
   const createNewNoteButton = document.querySelector('.createNewNoteButton');
+  const optionsButton = document.querySelector('.optionsButton');
+
   const customNoteInput = document.createElement('textarea');
   const customTitleInput = document.createElement('input');
   const customNoteButton = document.createElement('button');
@@ -113,6 +116,15 @@
     categoryList.appendChild(categoryItem);
   });
 
+  // go to options page on button click
+  function goToOptionsPage() {
+    if (chrome.runtime.openOptionsPage) {
+      chrome.runtime.openOptionsPage();
+    } else {
+      window.open(chrome.runtime.getURL('options/options.html'));
+    }
+  }
+
   // get the total amount of all notes
   const values = Object.values(selectedText);
   const amount = values.reduce((tally, currentValue) => tally + currentValue.note.length, 0);
@@ -120,4 +132,6 @@
   // display the amount of categories on the popup icon
   chrome.action.setBadgeText({ text: amount.toString() });
   chrome.storage.local.set({ "selectedText": selectedText });
+
+  optionsButton.addEventListener('click', goToOptionsPage);
 })();

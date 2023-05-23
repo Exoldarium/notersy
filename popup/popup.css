@@ -4,8 +4,13 @@ body {
   background: #80808030;
 }
 
+.header {
+  display: flex;
+}
+
 h1 {
   font-size: 25px;
+  flex: 1;
 }
 
 h2 {
@@ -81,7 +86,8 @@ input[type="checkbox"] {
 
 .editButton,
 .confirmNoteButton,
-.confirmButton {
+.confirmButton,
+.optionsButton {
   border-radius: 7px;
   border: none;
   height: 2rem;
