@@ -36,17 +36,19 @@
         const link = document.createElement('a');
         const div = document.createElement('div');
         const editButton = document.createElement('button');
+        const regex = /^((http|https|ftp):\/\/)/;
 
-        // truncate note title
-        if (obj.title.length >= 25) {
-          link.textContent = obj.title.slice(0, 25) + '...';
-        } else {
+        // check if title is url or just a normal string
+        if (regex.test(obj.title)) {
+          link.textContent = new URL(obj.title).hostname;
+          link.href = obj.title;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+        }
+        if (!regex.test(obj.title)) {
           link.textContent = obj.title;
         }
 
-        link.href = obj.title;
-        link.target = "_blank";
-        link.rel = "noopener noreferrer";
         text.textContent = obj.text;
         checkbox.type = 'checkbox';
         checkbox.id = obj.text;
