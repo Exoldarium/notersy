@@ -35,7 +35,7 @@
       }
     }
 
-    // update storage and send it to background.js
+    // update storage
     chrome.storage.local.set({ "selectedText": selectedText });
     // rerender the html every time the button is clicked so that correct category is displayed
     location.reload();
@@ -197,6 +197,7 @@
     chrome.storage.local.set({ "selectedText": selectedText });
   }
 
+  // send the updated array back to background.js
   chrome.runtime.sendMessage({ message: selectedText });
 
   deleteNotesButton.addEventListener('click', deleteCheckedInput);

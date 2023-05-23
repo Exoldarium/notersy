@@ -113,10 +113,11 @@
     categoryList.appendChild(categoryItem);
   });
 
-  // TODO:
-  // i might be able to use reduce to display the total note count
+  // get the total amount of all notes
+  const values = Object.values(selectedText);
+  const amount = values.reduce((tally, currentValue) => tally + currentValue.note.length, 0);
 
   // display the amount of categories on the popup icon
-  chrome.action.setBadgeText({ text: selectedText.length.toString() });
+  chrome.action.setBadgeText({ text: amount.toString() });
   chrome.storage.local.set({ "selectedText": selectedText });
 })();
