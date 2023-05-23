@@ -1,4 +1,4 @@
-# Note take chrome extension
+# Note taker chrome extension
 
 A small chrome extension that allows users to add, create, update and delete notes, group them in categories. The notes are saved in Chrome's local storage so they can be accesed at any time.
 
