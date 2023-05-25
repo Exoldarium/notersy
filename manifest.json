@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Note taker",
+  "name": "Note Taker",
   "description": "Save text as notes",
   "version": "1.0",
   "icons": {
