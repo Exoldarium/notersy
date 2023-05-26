@@ -1,6 +1,7 @@
 (async () => {
   const res = await chrome.storage.local.get('selectedText');
   const selectedText = res.selectedText || [];
+  const date = new Date().toString().slice(0, 15);
 
   const categoryList = document.querySelector(".categoryList");
   const deleteNotesButton = document.querySelector(".deleteNotesButton");
@@ -10,12 +11,16 @@
   const createNewNote = document.querySelector('.createNewNote');
   const createNewNoteButton = document.querySelector('.createNewNoteButton');
   const noteList = document.querySelector('.noteList');
+  const newCategoryButton = document.querySelector('.createNewCategory');
 
   // TODO:
   // add a color picker but limit it to only some optimizied colors that won't clash with the design
 
   // TODO:
   // add an options page that explains what the app does and how it works, adds a way to clear local storage, add a color picker to customize the app
+
+  // TODO:
+  // fix the problem with categories not deleteing when deleteing multiple in a row, might be a loop problem because removing window.confirm fixes it, try to break the loop
 
   // track how many times the button has been clicked, we don't want to duplicate notes
   let counter = 0;
@@ -47,16 +52,13 @@
     const input = document.querySelectorAll('input[type="checkbox"]');
 
     input.forEach(input => {
-      // check if input is checked
-      if (input.checked) {
-        for (const keys of selectedText) {
-          for (const key of keys.note) {
-            // if the text content of the key matches selected input id (i'm using note text as id)
-            if (key.text === input.id) {
-              // remove that key
-              const index = keys.note.indexOf(key);
-              keys.note.splice(index, 1);
-            }
+      for (const keys of selectedText) {
+        for (const key of keys.note) {
+          // if the text content of the key matches selected input id (i'm using note text as id) and input is checked
+          if (key.text === input.id && input.checked) {
+            // remove that key
+            const index = keys.note.indexOf(key);
+            keys.note.splice(index, 1);
           }
         }
       }
@@ -120,9 +122,12 @@
   // allow user to add custom notes
   function addCustomNote() {
     for (const keys of selectedText) {
-      keys.customNote = false;
-      if (keys.active) {
-        keys.customNote = true;
+      for (const key of keys.note) {
+        keys.customNote = false;
+        key.edit = false;
+        if (keys.active) {
+          keys.customNote = true;
+        }
       }
     }
 
@@ -198,6 +203,23 @@
     chrome.storage.local.set({ "selectedText": selectedText });
   }
 
+  // add new category on button click
+  function createNewCategory() {
+    selectedText.push({
+      date: date,
+      active: false,
+      rename: false,
+      customNote: false,
+      editNote: false,
+      id: self.crypto.randomUUID(),
+      name: "New category",
+      note: []
+    });
+
+    chrome.storage.local.set({ "selectedText": selectedText });
+    location.reload();
+  }
+
   // send the updated array back to background.js
   chrome.runtime.sendMessage({ message: selectedText });
 
@@ -209,4 +231,5 @@
   renameForm.addEventListener('submit', submitNewName);
   createNewNote.addEventListener('submit', submitCustomNote);
   noteList.addEventListener('click', editNote);
+  newCategoryButton.addEventListener('click', createNewCategory);
 })();

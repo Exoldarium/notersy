@@ -55,6 +55,7 @@
         editButton.textContent = 'Edit';
         editButton.id = obj.id;
         editButton.className = 'editButton';
+        div.className = 'notesDiv';
 
         url.appendChild(link);
         div.appendChild(url);
