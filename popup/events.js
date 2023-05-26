@@ -19,8 +19,12 @@
   // TODO:
   // add an options page that explains what the app does and how it works, adds a way to clear local storage, add a color picker to customize the app
 
-  // TODO:
-  // fix the problem with categories not deleteing when deleteing multiple in a row, might be a loop problem because removing window.confirm fixes it, try to break the loop
+  // rerender the html every time storage changes
+  chrome.storage.onChanged.addListener((change) => {
+    if (change) {
+      location.reload();
+    }
+  });
 
   // track how many times the button has been clicked, we don't want to duplicate notes
   let counter = 0;
@@ -43,8 +47,6 @@
 
     // update storage
     chrome.storage.local.set({ "selectedText": selectedText });
-    // rerender the html every time the button is clicked so that correct category is displayed
-    location.reload();
   }
 
   // delete selected notes
@@ -66,22 +68,21 @@
 
     // update local storage
     chrome.storage.local.set({ "selectedText": selectedText });
-    location.reload();
   }
 
   // deletes active category
-  function deleteCategory() {
+  async function deleteCategory() {
     for (const keys of selectedText) {
       if (keys.active) {
-        if (window.confirm(`Are you sure you want to delete ${keys.name} and all the notes in it?`)) {
+        if (window.confirm(`Are you sure you want to delete and all the notes in it?`)) {
           const index = selectedText.indexOf(keys);
           selectedText.splice(index, 1);
+          break;
         }
       }
     }
 
-    chrome.storage.local.set({ "selectedText": selectedText });
-    location.reload();
+    chrome.storage.local.set({ "selectedText": selectedText })
   }
 
   // renders rename menu on button click
@@ -94,7 +95,6 @@
     }
 
     chrome.storage.local.set({ "selectedText": selectedText });
-    location.reload();
   }
 
   // grabs user input and renames the category
@@ -116,23 +116,21 @@
     }
 
     chrome.storage.local.set({ "selectedText": selectedText });
-    location.reload();
   }
 
   // allow user to add custom notes
   function addCustomNote() {
     for (const keys of selectedText) {
+      keys.customNote = false;
+      if (keys.active) {
+        keys.customNote = true;
+      }
       for (const key of keys.note) {
-        keys.customNote = false;
         key.edit = false;
-        if (keys.active) {
-          keys.customNote = true;
-        }
       }
     }
 
     chrome.storage.local.set({ "selectedText": selectedText });
-    location.reload();
   }
 
   // add custom note input value to local storage or allow user to edit note
@@ -174,7 +172,6 @@
     }
 
     chrome.storage.local.set({ "selectedText": selectedText });
-    location.reload();
   }
 
   // allows user to edit the note
@@ -195,7 +192,7 @@
               text: key.text,
             }
           });
-          location.reload();
+
         }
       }
     }
@@ -217,7 +214,6 @@
     });
 
     chrome.storage.local.set({ "selectedText": selectedText });
-    location.reload();
   }
 
   // send the updated array back to background.js
