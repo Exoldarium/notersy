@@ -115,6 +115,14 @@ input[type="checkbox"] {
   font-size: 13px;
 }
 
+.editButton {
+  z-index: 0;
+}
+
+.editButton>i {
+  z-index: 1;
+}
+
 .renameCategory>button {
   border-radius: 7px;
   border: none;

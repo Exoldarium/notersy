@@ -59,8 +59,10 @@
         checkbox.type = 'checkbox';
         checkbox.id = obj.text;
         editButton.id = obj.id;
+        editButton.type = 'button';
         editButton.className = 'editButton';
         editButtonIcon.className = 'bi bi-pencil-square'
+        editButtonIcon.id = obj.id;
         editButton.style = "font-size: 17px;"
         div.className = 'notesDiv';
 
