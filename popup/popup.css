@@ -114,6 +114,17 @@ input[type="checkbox"] {
   font-size: 13px;
 }
 
+.renameCategory>button {
+  border-radius: 7px;
+  border: none;
+  height: 2rem;
+  margin-top: 0.5rem;
+  background: #b5c689;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.3);
+  font-size: 13px;
+}
+
 .noteList>li>p {
   padding: 0.2rem;
   font-size: 14px;
@@ -165,7 +176,7 @@ p {
 }
 
 .createNewNote>button {
-  width: 3.5rem;
+  width: 2.5rem;
 }
 
 .titleInput {

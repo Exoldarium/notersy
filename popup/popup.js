@@ -80,13 +80,16 @@
     if (obj.rename) {
       const renameInput = document.createElement('input');
       const confirmButton = document.createElement('button');
+      const confirmButtonStyle = document.createElement('i');
 
       renameInput.type = 'text';
       confirmButton.type = 'submit';
-      confirmButton.textContent = 'Confirm';
       confirmButton.className = 'confirmButton';
+      confirmButtonStyle.className = "bi bi-check-square";
+      confirmButtonStyle.style = "font-size: 20px;";
 
       renameForm.appendChild(renameInput);
+      confirmButton.appendChild(confirmButtonStyle);
       renameForm.appendChild(confirmButton);
     }
 
@@ -104,7 +107,7 @@
       customNoteButton.type = 'submit';
       customNoteButton.className = 'confirmNoteButton';
       confirmButton.className = "bi bi-check-square";
-      confirmButton.style = "font-size: 20px;"
+      confirmButton.style = "font-size: 20px;";
 
       createNewNote.appendChild(customTitleInput);
       createNewNote.appendChild(customNoteInput);
