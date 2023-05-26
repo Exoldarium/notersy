@@ -9,14 +9,19 @@
   const createNewNote = document.querySelector(".createNewNote");
   const createNewNoteButton = document.querySelector('.createNewNoteButton');
   const optionsButton = document.querySelector('.optionsButton');
+  const deleteNotesButton = document.querySelector(".deleteNotesButton");
 
   const customNoteInput = document.createElement('textarea');
   const customTitleInput = document.createElement('input');
   const customNoteButton = document.createElement('button');
   console.log({ selectedText });
 
+  // TODO:
+  // add a background color that will encompass the notes and the active category, we could z-index it behind all other notes and categories
+
   if (selectedText.length === 0) {
     createNewNoteButton.style.display = 'none';
+    deleteNotesButton.style.display = 'none';
   }
 
   // create categories and add data to DOM
@@ -36,6 +41,7 @@
         const link = document.createElement('a');
         const div = document.createElement('div');
         const editButton = document.createElement('button');
+        const editButtonIcon = document.createElement('i');
         const regex = /^((http|https|ftp):\/\/)/;
 
         // check if title is url or just a normal string
@@ -52,13 +58,15 @@
         text.textContent = obj.text;
         checkbox.type = 'checkbox';
         checkbox.id = obj.text;
-        editButton.textContent = 'Edit';
         editButton.id = obj.id;
         editButton.className = 'editButton';
+        editButtonIcon.className = 'bi bi-pencil-square'
+        editButton.style = "font-size: 17px;"
         div.className = 'notesDiv';
 
         url.appendChild(link);
         div.appendChild(url);
+        editButton.appendChild(editButtonIcon);
         div.appendChild(editButton);
         div.appendChild(checkbox)
         notesItem.appendChild(div);
@@ -84,6 +92,8 @@
 
     // check if the user wants to add a custom note
     if (obj.customNote) {
+      const confirmButton = document.createElement('i');
+
       customTitleInput.type = 'text';
       customTitleInput.id = obj.id;
       customTitleInput.className = 'titleInput';
@@ -92,11 +102,13 @@
       customNoteInput.className = "textInput";
       customNoteButton.id = obj.id
       customNoteButton.type = 'submit';
-      customNoteButton.textContent = 'Add';
       customNoteButton.className = 'confirmNoteButton';
+      confirmButton.className = "bi bi-check-square";
+      confirmButton.style = "font-size: 20px;"
 
       createNewNote.appendChild(customTitleInput);
       createNewNote.appendChild(customNoteInput);
+      customNoteButton.appendChild(confirmButton);
       createNewNote.appendChild(customNoteButton);
     }
 
