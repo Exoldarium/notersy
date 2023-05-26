@@ -97,7 +97,13 @@ input[type="checkbox"] {
   padding: 0.2rem;
 }
 
+.notesDiv {
+  padding: 0;
+}
+
 .noteList>li>div>h2 {
+  padding: 0.5rem 0.2rem 0.5rem 0.2rem;
+  margin: 0;
   flex: 1;
 }
 
@@ -135,7 +141,7 @@ input[type="checkbox"] {
 }
 
 .noteList>li>p {
-  padding: 0.2rem;
+  padding: 0.5rem 0.2rem 0.5rem 0.2rem;
   font-size: 14px;
 }
 
