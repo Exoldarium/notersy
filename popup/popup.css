@@ -16,6 +16,8 @@ body {
 h1 {
   font-size: 25px;
   flex: 1;
+  margin: 0;
+  padding-top: 0.5rem;
 }
 
 h2 {
@@ -37,9 +39,8 @@ button {
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.3);
 }
 
-nav {
-  padding: 0.5rem;
-  border-bottom: 1px solid black;
+.buttons {
+  padding: 0;
 }
 
 .buttons>button {
@@ -135,18 +136,20 @@ input[type="checkbox"] {
   height: fit-content;
   padding: 0;
   margin: 0.2rem;
-  border-radius: 7px;
+  border-radius: 20px;
   border: none;
 }
 
 .categoryList>li>button {
-  border-radius: 7px;
+  border-radius: 20px;
   border: none;
-  height: 1.5rem;
+  height: 2rem;
   background: #EDDD6E;
   cursor: pointer;
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.3);
   font-size: 13px;
+  font-family: --apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  font-weight: 500;
 }
 
 li:nth-child(odd) {
@@ -206,6 +209,7 @@ p {
   position: absolute;
   z-index: 1;
   margin-top: 35px;
+  opacity: 0.9;
 }
 
 .buttons>button:hover .tooltiptext {
