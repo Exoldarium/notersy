@@ -1,6 +1,7 @@
 (async () => {
   const res = await chrome.storage.local.get('selectedText');
   const storedNoteRes = await chrome.storage.local.get('storedNote');
+  const storedInputValuesRes = await chrome.storage.local.get('storedInputValues');
   const selectedText = res.selectedText || [];
 
   const notesList = document.querySelector(".noteList");
@@ -15,10 +16,12 @@
   const customTitleInput = document.createElement('input');
   const customNoteButton = document.createElement('button');
   console.log({ selectedText });
+  console.log(storedInputValuesRes);
 
   // TODO:
   // add a background color that will encompass the notes and the active category, we could z-index it behind all other notes and categories
 
+  // hide create and delete notes button if there are no categories
   if (selectedText.length === 0) {
     createNewNoteButton.style.display = 'none';
     deleteNotesButton.style.display = 'none';
@@ -110,6 +113,10 @@
       customNoteButton.className = 'confirmNoteButton';
       confirmButton.className = "bi bi-check-square";
       confirmButton.style = "font-size: 20px;";
+
+      // update input values with saved input values so that the note saves
+      customTitleInput.value = storedInputValuesRes.storedInputValues.title;
+      customNoteInput.value = storedInputValuesRes.storedInputValues.text;
 
       createNewNote.appendChild(customTitleInput);
       createNewNote.appendChild(customNoteInput);

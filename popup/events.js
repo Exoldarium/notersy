@@ -1,5 +1,7 @@
 (async () => {
   const res = await chrome.storage.local.get('selectedText');
+  const storedInputValuesRes = await chrome.storage.local.get('storedInputValues');
+  const storedInputValues = storedInputValuesRes.storedInputValues;
   const selectedText = res.selectedText || [];
   const date = new Date().toString().slice(0, 15);
 
@@ -17,11 +19,11 @@
   // add a color picker but limit it to only some optimizied colors that won't clash with the design
 
   // TODO:
-  // add an options page that explains what the app does and how it works, adds a way to clear local storage, add a color picker to customize the app
+  // try to save custom note input so that even if the popup is closed while typing the text persists
 
   // rerender the html every time storage changes
   chrome.storage.onChanged.addListener((change) => {
-    if (change) {
+    if (change.selectedText || change.storedNote) {
       location.reload();
     }
   });
@@ -171,7 +173,12 @@
       }
     }
 
+    // reset input values on submit
+    storedInputValuesRes.storedInputValues.title = '';
+    storedInputValuesRes.storedInputValues.text = '';
+
     chrome.storage.local.set({ "selectedText": selectedText });
+    chrome.storage.local.set({ "storedInputValues": storedInputValues });
   }
 
   // allows user to edit the note
@@ -192,7 +199,6 @@
               text: key.text,
             }
           });
-
         }
       }
     }
@@ -216,6 +222,22 @@
     chrome.storage.local.set({ "selectedText": selectedText });
   }
 
+  // save users note input
+  function saveUserInput() {
+    const titleInput = document.querySelectorAll('input[type="text"]');
+    const textInput = document.querySelectorAll('textarea');
+
+    const inputValues = {
+      title: '',
+      text: '',
+    };
+
+    titleInput.forEach(input => inputValues.title = input.value);
+    textInput.forEach(input => inputValues.text = input.value);
+
+    chrome.storage.local.set({ "storedInputValues": inputValues });
+  }
+
   // send the updated array back to background.js
   chrome.runtime.sendMessage({ message: selectedText });
 
@@ -226,6 +248,7 @@
   createNewNoteButton.addEventListener('click', addCustomNote);
   renameForm.addEventListener('submit', submitNewName);
   createNewNote.addEventListener('submit', submitCustomNote);
+  createNewNote.addEventListener('keyup', saveUserInput);
   noteList.addEventListener('click', editNote);
   newCategoryButton.addEventListener('click', createNewCategory);
 })();
