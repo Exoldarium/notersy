@@ -18,9 +18,6 @@
   // TODO:
   // add a color picker but limit it to only some optimizied colors that won't clash with the design
 
-  // TODO:
-  // try to save custom note input so that even if the popup is closed while typing the text persists
-
   // rerender the html every time storage changes
   chrome.storage.onChanged.addListener((change) => {
     if (change.selectedText || change.storedNote) {
@@ -222,7 +219,7 @@
     chrome.storage.local.set({ "selectedText": selectedText });
   }
 
-  // save users note input
+  // save users note input values
   function saveUserInput() {
     const titleInput = document.querySelectorAll('input[type="text"]');
     const textInput = document.querySelectorAll('textarea');
