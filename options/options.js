@@ -14,6 +14,7 @@ function clearStorage() {
     if (window.confirm(`All saved data will be deleted, press OK to continue`)) {
       chrome.storage.local.clear();
       chrome.runtime.sendMessage({ clearStorage: 'clear' });
+      chrome.runtime.reload();
     }
   } else {
     return;
