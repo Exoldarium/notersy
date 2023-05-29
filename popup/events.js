@@ -127,6 +127,11 @@
 
   // allow user to add custom notes
   function addCustomNote() {
+    const inputValues = {
+      title: '',
+      text: '',
+    };
+
     for (const keys of selectedText) {
       keys.customNote = false;
       if (keys.active) {
@@ -138,6 +143,7 @@
     }
 
     chrome.storage.local.set({ "selectedText": selectedText });
+    chrome.storage.local.set({ "storedInputValues": inputValues });
   }
 
   // add custom note input value to local storage or allow user to edit note
@@ -177,6 +183,9 @@
         }
       }
     }
+
+    storedInputValues.title = '';
+    storedInputValues.text = '';
 
     chrome.storage.local.set({ "selectedText": selectedText });
     chrome.storage.local.set({ "storedInputValues": storedInputValues });
