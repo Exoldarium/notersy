@@ -81,7 +81,6 @@ function deleteCheckedInput() {
     }
   });
 
-  // update local storage
   chrome.storage.local.set({ "selectedText": selectedText });
 }
 
