@@ -7,13 +7,13 @@ const createNewNote = document.querySelector('.createNewNote');
 const createNewNoteButton = document.querySelector('.createNewNoteButton');
 const noteList = document.querySelector('.noteList');
 const newCategoryButton = document.querySelector('.createNewCategory');
-
 const date = new Date().toString().slice(0, 15);
 const inputValues = {
   title: '',
   text: '',
 };
 
+// await data
 const getNoteData = async () => {
   const res = await chrome.storage.local.get('selectedText');
   const selectedText = res.selectedText || [];
