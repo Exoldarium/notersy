@@ -1,22 +1,29 @@
-const data = async () => {
+async function data() {
   const res = await chrome.storage.local.get('selectedText');
   const selectedText = res.selectedText || [];
   return selectedText;
 };
 
 const selectedText = await data();
-
+const confirmClearDiv = document.querySelector('.confirmClear');
 const clearStorageButton = document.querySelector('.clearStorageButton');
 
-// clears the storage and all saved data
+// prompt the user to confirm
 function clearStorage() {
-  if (window.confirm(`Are you sure you want to delete all saved data?`)) {
-    if (window.confirm(`All saved data will be deleted, press OK to continue`)) {
-      chrome.storage.local.clear();
-      chrome.runtime.sendMessage({ clearStorage: 'clear' });
-    }
+  confirmClearDiv.classList.add('confirmActive');
+}
+
+// clears the storage and all saved data
+function confirmClear(e) {
+  if (e.target.textContent === 'OK') {
+    chrome.storage.local.clear();
+    chrome.runtime.sendMessage({ clearStorage: 'clear' });
+    confirmClearDiv.classList.remove('confirmActive');
+  }
+  if (e.target.textContent === 'Cancel') {
+    confirmClearDiv.classList.remove('confirmActive');
   }
 }
 
 clearStorageButton.addEventListener('click', clearStorage);
-
+confirmClearDiv.addEventListener('click', confirmClear);

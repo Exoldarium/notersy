@@ -36,3 +36,19 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+.confirmClear {
+  display: none;
+}
+
+.confirmActive {
+  padding: 2rem;
+  display: block;
+  margin-top: 75px;
+  position: absolute;
+  background: white;
+  height: 15vh;
+  width: 20vw;
+  border: 1px solid black;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.3);
+}

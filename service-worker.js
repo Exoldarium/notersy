@@ -91,6 +91,5 @@ chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.onClicked.addListener(() => {
     chrome.storage.local.set({ "selectedText": arr });
   });
-
   console.log({ arr });
 })();
