@@ -18,9 +18,6 @@
   console.log({ selectedText });
   console.log(storedInputValuesRes);
 
-  // TODO:
-  // add a background color that will encompass the notes and the active category, we could z-index it behind all other notes and categories
-
   // hide create and delete notes button if there are no categories
   if (selectedText.length === 0) {
     createNewNoteButton.style.display = 'none';
