@@ -29,6 +29,15 @@ body {
   padding: 1.5rem;
 }
 
+.main>div {
+  padding: 1rem;
+}
+
+p {
+  font-size: 15px;
+  margin: 0.5rem 0 0.5rem 0;
+}
+
 .customization,
 .clearStorage,
 .export,

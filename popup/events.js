@@ -3,7 +3,12 @@
   const storedInputValuesRes = await chrome.storage.local.get('storedInputValues');
   const storedInputValues = storedInputValuesRes.storedInputValues;
   const selectedText = res.selectedText || [];
+
   const date = new Date().toString().slice(0, 15);
+  const inputValues = {
+    title: '',
+    text: '',
+  };
 
   const categoryList = document.querySelector(".categoryList");
   const deleteNotesButton = document.querySelector(".deleteNotesButton");
@@ -14,10 +19,7 @@
   const createNewNoteButton = document.querySelector('.createNewNoteButton');
   const noteList = document.querySelector('.noteList');
   const newCategoryButton = document.querySelector('.createNewCategory');
-  const inputValues = {
-    title: '',
-    text: '',
-  };
+
 
   // TODO:
   // add a color picker but limit it to only some optimizied colors that won't clash with the design

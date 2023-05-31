@@ -47,8 +47,6 @@ function prepareFile(filename, text) {
   downloadDiv.appendChild(link);
 
   link.click();
-
-  downloadDiv.removeChild(link);
 }
 
 // download the file after the button has been clicked
