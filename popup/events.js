@@ -16,7 +16,6 @@
   const noteList = document.querySelector('.noteList');
   const newCategoryButton = document.querySelector('.createNewCategory');
 
-
   // TODO:
   // add a color picker but limit it to only some optimizied colors that won't clash with the design
   //TODO: 
@@ -221,13 +220,14 @@
     chrome.storage.local.set({ "selectedText": selectedText });
   }
 
-  // save users note input values
+  // save users note input values and text area height
   function saveUserInput() {
     const titleInput = document.querySelector('input[type="text"]');
     const textInput = document.querySelector('textarea');
 
     chrome.storage.local.set({
       "storedInputValues": {
+        height: textInput.scrollHeight,
         title: titleInput.value,
         text: textInput.value,
       }

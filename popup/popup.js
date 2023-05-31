@@ -115,6 +115,7 @@
       customNoteButton.className = 'confirmNoteButton';
       confirmButton.className = "bi bi-check-square";
       confirmButton.style = "font-size: 20px;";
+      customNoteInput.style = `height: ${storedInputValuesRes.storedInputValues.height}px;`;
 
       // update input values with saved input values so that the note saves
       customTitleInput.value = storedInputValuesRes.storedInputValues.title;
