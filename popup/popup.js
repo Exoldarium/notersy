@@ -18,8 +18,8 @@
   console.log({ selectedText });
   console.log(storedInputValuesRes);
 
-  // TODO:
-  // add a small link in the nav that users can click to donate (a heart icon?)
+  // TODO: 
+  // remove logs
 
   // hide create and delete notes button if there are no categories
   if (selectedText.length === 0) {

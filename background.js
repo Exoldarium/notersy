@@ -26,13 +26,14 @@ chrome.runtime.onInstalled.addListener(() => {
   const date = new Date().toString().slice(0, 15);
 
   // update local storage with new data from popup.js
-  chrome.runtime.onMessage.addListener((request) => {
+  chrome.runtime.onMessage.addListener(async (request) => {
+    const res = await request;
     // check if there is a message
-    if (request.message) {
+    if (res.message) {
       arr.length = 0; // set array to 0 so that it doesn't add old data when new data is pushed
-      arr.push(...request.message);
+      arr.push(...res.message);
     }
-    if (request.clear) {
+    if (res.clear) {
       arr.length = 0;
     }
   });

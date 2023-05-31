@@ -18,10 +18,14 @@
 
   // TODO:
   // add a color picker but limit it to only some optimizied colors that won't clash with the design
-  //TODO: 
+  // TODO: 
   // text and paragraph formatting
   // TODO:
   // try to see if we can remove window.confirm from delete category and add custom menu like in options
+  // TODO:
+  // add a button that closes textarea and rename input, it can work similarly to displayNotesOnCategory click, it will make everything false
+  // TODO:
+  // add a prompt that tells user to select a category if category is not selected
 
   // rerender the html every time storage changes
   chrome.storage.onChanged.addListener((change) => {
