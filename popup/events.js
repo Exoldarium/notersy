@@ -20,6 +20,8 @@
   // add a color picker but limit it to only some optimizied colors that won't clash with the design
   //TODO: 
   // text and paragraph formatting
+  // TODO:
+  // try to see if we can remove window.confirm from delete category and add custom menu like in options
 
   // rerender the html every time storage changes
   chrome.storage.onChanged.addListener((change) => {
@@ -75,7 +77,7 @@
   async function deleteCategory() {
     for (const keys of selectedText) {
       if (keys.active) {
-        if (window.confirm(`Are you sure you want to delete ${keys.name} and all the notes in it?`)) {
+        if (window.confirm(`Are you sure you want to delete ${keys.name.length > 45 ? keys.name.slice(0, 45) + '...' : keys.name} and all the notes in it?`)) {
           const index = selectedText.indexOf(keys);
           selectedText.splice(index, 1);
           break;

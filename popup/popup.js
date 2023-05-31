@@ -18,9 +18,6 @@
   console.log(storedInputValuesRes);
 
   // TODO:
-  // try to save the height of the text area after resizing
-  // https://stackoverflow.com/questions/3341496/how-to-get-the-height-of-the-text-inside-of-a-textarea
-  // TODO:
   // add a small link in the nav that users can click to donate (a heart icon?)
 
   // hide create and delete notes button if there are no categories
@@ -128,7 +125,7 @@
     }
 
     categoryButton.id = obj.id;
-    categoryButton.textContent = obj.name;
+    categoryButton.textContent = obj.name.length > 45 ? obj.name.slice(0, 45) + '...' : obj.name; // truncate category title
     categoryButton.type = 'button';
     categoryButton.className = 'categoryButton';
 
