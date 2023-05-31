@@ -5,12 +5,7 @@
   const selectedText = res.selectedText || [];
 
   const date = new Date().toString().slice(0, 15);
-  const inputValues = {
-    title: '',
-    text: '',
-  };
 
-  console.log(storedInputValues);
   const categoryList = document.querySelector(".categoryList");
   const deleteNotesButton = document.querySelector(".deleteNotesButton");
   const deleteCategoryButton = document.querySelector(".deleteCategoryButton");
@@ -138,7 +133,7 @@
     }
 
     chrome.storage.local.set({ "selectedText": selectedText });
-    chrome.storage.local.set({ "storedInputValues": inputValues });
+    chrome.storage.local.set({ "storedInputValues": storedInputValues });
   }
 
   // add custom note input value to local storage or allow user to edit note
@@ -197,14 +192,17 @@
           key.edit = true;
 
           // add the text and title values to storage
-          inputValues.title = key.title;
-          inputValues.text = key.text;
+          chrome.storage.local.set({
+            "storedInputValues": {
+              title: key.title,
+              text: key.text,
+            }
+          });
         }
       }
     }
 
     chrome.storage.local.set({ "selectedText": selectedText });
-    chrome.storage.local.set({ "storedInputValues": inputValues });
   }
 
   // add new category on button click
@@ -225,13 +223,15 @@
 
   // save users note input values
   function saveUserInput() {
-    const titleInput = document.querySelectorAll('input[type="text"]');
-    const textInput = document.querySelectorAll('textarea');
+    const titleInput = document.querySelector('input[type="text"]');
+    const textInput = document.querySelector('textarea');
 
-    titleInput.forEach(input => inputValues.title = input.value);
-    textInput.forEach(input => inputValues.text = input.value);
-
-    chrome.storage.local.set({ "storedInputValues": inputValues });
+    chrome.storage.local.set({
+      "storedInputValues": {
+        title: titleInput.value,
+        text: textInput.value,
+      }
+    });
   }
 
   // send the updated array back to background.js
