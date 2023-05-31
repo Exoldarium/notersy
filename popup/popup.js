@@ -18,6 +18,12 @@
   console.log({ selectedText });
   console.log(storedInputValuesRes);
 
+  // TODO:
+  // try to save the height of the text area after resizing
+  // https://stackoverflow.com/questions/3341496/how-to-get-the-height-of-the-text-inside-of-a-textarea
+  // TODO:
+  // add a small link in the nav that users can click to donate (a heart icon?)
+
   // hide create and delete notes button if there are no categories
   if (selectedText.length === 0) {
     createNewNoteButton.style.display = 'none';

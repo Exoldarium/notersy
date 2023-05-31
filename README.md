@@ -15,7 +15,6 @@ This was the first time i've encountered service-workers and it took some time t
 Design wise, i tried to keep the extension minimalistic as per Chrome's own design style. I will probably update style as i go.
 
 ## TODO
-  - Testing
   - Additional styling
   - Deployment
 

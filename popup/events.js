@@ -21,6 +21,8 @@
 
   // TODO:
   // add a color picker but limit it to only some optimizied colors that won't clash with the design
+  // TODO:
+  // edited notes should also save if the popup is closed and note is not submited
 
   // rerender the html every time storage changes
   chrome.storage.onChanged.addListener((change) => {
