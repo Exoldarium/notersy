@@ -10,6 +10,7 @@
     text: '',
   };
 
+  console.log(storedInputValues);
   const categoryList = document.querySelector(".categoryList");
   const deleteNotesButton = document.querySelector(".deleteNotesButton");
   const deleteCategoryButton = document.querySelector(".deleteCategoryButton");
@@ -23,8 +24,8 @@
 
   // TODO:
   // add a color picker but limit it to only some optimizied colors that won't clash with the design
-  // TODO:
-  // edited notes should also save if the popup is closed and note is not submited
+  //TODO: 
+  // text and paragraph formatting
 
   // rerender the html every time storage changes
   chrome.storage.onChanged.addListener((change) => {
@@ -196,13 +197,8 @@
           key.edit = true;
 
           // add the text and title values to storage
-          chrome.storage.local.set({
-            "storedNote": {
-              id: key.id,
-              title: key.title,
-              text: key.text,
-            }
-          });
+          inputValues.title = key.title;
+          inputValues.text = key.text;
         }
       }
     }

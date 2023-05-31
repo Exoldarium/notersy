@@ -1,6 +1,5 @@
 (async () => {
   const res = await chrome.storage.local.get('selectedText');
-  const storedNoteRes = await chrome.storage.local.get('storedNote');
   const storedInputValuesRes = await chrome.storage.local.get('storedInputValues');
   const selectedText = res.selectedText || [];
 
@@ -125,14 +124,6 @@
       createNewNote.appendChild(customNoteInput);
       customNoteButton.appendChild(confirmButton);
       createNewNote.appendChild(customNoteButton);
-    }
-
-    // grab values from storage if edit property is true and add them to input and textarea
-    for (const key of obj.note) {
-      if (key.edit) {
-        customTitleInput.value = storedNoteRes.storedNote.title;
-        customNoteInput.value = storedNoteRes.storedNote.text;
-      }
     }
 
     categoryButton.id = obj.id;
