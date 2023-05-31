@@ -52,3 +52,14 @@ body {
   border: 1px solid black;
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.3);
 }
+
+button {
+  background: #b5c689;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.3);
+  font-size: 20px;
+  border-radius: 7px;
+  border: none;
+  height: 2rem;
+  margin: 0.2rem;
+}

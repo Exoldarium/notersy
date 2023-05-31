@@ -53,7 +53,7 @@ function prepareFile(filename, text) {
 
 // download the file after the button has been clicked
 function downloadFile(e) {
-  if (e.target.textContent === 'Download') {
+  if (e.target) {
     prepareFile('notes.txt', dataArr.join(''));
   }
 }
