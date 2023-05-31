@@ -14,6 +14,7 @@
   const customNoteInput = document.createElement('textarea');
   const customTitleInput = document.createElement('input');
   const customNoteButton = document.createElement('button');
+
   console.log({ selectedText });
   console.log(storedInputValuesRes);
 
