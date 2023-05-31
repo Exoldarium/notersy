@@ -30,6 +30,7 @@
   selectedText.map(obj => {
     const categoryItem = document.createElement('li');
     const categoryButton = document.createElement('button');
+    const categoryTooltip = document.createElement('span');
 
     // display only the notes from the category that has been clicked
     if (obj.active) {
@@ -128,7 +129,10 @@
     categoryButton.textContent = obj.name.length > 45 ? obj.name.slice(0, 45) + '...' : obj.name; // truncate category title
     categoryButton.type = 'button';
     categoryButton.className = 'categoryButton';
+    categoryTooltip.className = 'tooltiptext';
+    categoryTooltip.textContent = obj.name.length > 45 ? obj.name : categoryTooltip.classList.remove('tooltiptext');
 
+    categoryButton.appendChild(categoryTooltip);
     categoryItem.appendChild(categoryButton);
     categoryList.appendChild(categoryItem);
   });
