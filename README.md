@@ -4,7 +4,7 @@ A small chrome extension that allows users to add, create, update and delete not
 
 ## Description:
 
-This is my submission for CS50x final project, although it has been changed considerably since i submited my final project as i continue to add more features and fix some of the bugs that i encounter. 
+This is my submission for CS50x final project, although it has been changed considerably since i submited it and became a much bigger application than i originally intended it to be. It will probably change more as i continue to add more features to it and fix bugs that i encounter. 
 
 Considering i spend quite a bit of time online reading and studying i decided to make a small extension that would allow me to grab text from websites and group them in notes that i can access later on. The project was a great way to learn how Chrome extension's work. There were some challenges initially, especially making the extension in a way that is not too intrusive and not requiring too many permissions from the user. 
 
