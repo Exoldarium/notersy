@@ -77,7 +77,7 @@
   async function deleteCategory() {
     for (const keys of selectedText) {
       if (keys.active) {
-        if (window.confirm(`Are you sure you want to delete ${keys.name.length > 45 ? keys.name.slice(0, 45) + '...' : keys.name} and all the notes in it?`)) {
+        if (window.confirm(`Are you sure you want to delete ${keys.name.length > 50 ? keys.name.slice(0, 50) + '...' : keys.name} and all the notes in it?`)) {
           const index = selectedText.indexOf(keys);
           selectedText.splice(index, 1);
           break;

@@ -126,11 +126,11 @@
     }
 
     categoryButton.id = obj.id;
-    categoryButton.textContent = obj.name.length > 45 ? obj.name.slice(0, 45) + '...' : obj.name; // truncate category title
+    categoryButton.textContent = obj.name.length > 50 ? obj.name.slice(0, 50) + '...' : obj.name; // truncate category title
     categoryButton.type = 'button';
     categoryButton.className = 'categoryButton';
     categoryTooltip.className = 'tooltiptext';
-    categoryTooltip.textContent = obj.name.length > 45 ? obj.name : categoryTooltip.classList.remove('tooltiptext');
+    categoryTooltip.textContent = obj.name.length > 50 ? obj.name : categoryTooltip.classList.remove('tooltiptext');
 
     categoryButton.appendChild(categoryTooltip);
     categoryItem.appendChild(categoryButton);
