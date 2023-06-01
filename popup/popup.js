@@ -60,6 +60,7 @@
         }
 
         text.textContent = obj.text;
+        text.style = 'white-space: pre-wrap;';
         checkbox.type = 'checkbox';
         checkbox.id = obj.text;
         editButton.id = obj.id;
