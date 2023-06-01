@@ -23,10 +23,6 @@
   // text and paragraph formatting
   // TODO:
   // try to see if we can remove window.confirm from delete category and add custom menu like in options
-  // TODO:
-  // add a button that closes textarea and rename input, it can work similarly to displayNotesOnCategory click, it will make everything false
-  // TODO:
-  // add a prompt that tells user to select a category if category is not selected
 
   // rerender the html every time storage changes
   chrome.storage.onChanged.addListener((change) => {
@@ -35,13 +31,8 @@
     }
   });
 
-  // track how many times the button has been clicked, we don't want to duplicate notes
-  let counter = 0;
+  // show only notes from the currently active category
   function displayNotesOnCategoryClick(e) {
-    if (counter >= 1) {
-      return;
-    }
-
     // if the category is clicked set active to true, if not set it to false
     for (const key of selectedText) {
       key.active = false;
@@ -49,7 +40,6 @@
       key.customNote = false;
 
       if (e.target.id === key.id) {
-        counter += 1;
         key.active = true;
       }
     }
@@ -99,6 +89,10 @@
       key.rename = false;
       if (key.active) {
         key.rename = true;
+      }
+      if (!key.active) {
+        const buttons = document.querySelector('.buttons');
+        const prompt = document.createElement()
       }
     }
 
