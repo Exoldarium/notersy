@@ -90,10 +90,6 @@
       if (key.active) {
         key.rename = true;
       }
-      if (!key.active) {
-        const buttons = document.querySelector('.buttons');
-        const prompt = document.createElement()
-      }
     }
 
     chrome.storage.local.set({ "selectedText": selectedText });
