@@ -13,6 +13,10 @@ body {
   display: flex;
 }
 
+i {
+  font-size: 20px;
+}
+
 h1 {
   font-size: 25px;
   flex: 1;
@@ -43,7 +47,9 @@ button {
   padding: 0;
 }
 
-.buttons>button {
+
+.buttons>button,
+.cancelButton {
   background: #b5c689;
   cursor: pointer;
   box-shadow: 0 3px 10px rgb(0 0 0 / 0.3);
@@ -108,7 +114,7 @@ input[type="checkbox"] {
 }
 
 .donationsButton {
-  color: red;
+  color: #E30B5C;
   box-shadow: none;
   background: inherit;
   border: none;
@@ -234,6 +240,11 @@ p {
   z-index: 1;
   margin-top: 35px;
   opacity: 0.9;
+}
+
+.cancelButton {
+  visibility: hidden;
+  background: #F88379 !important;
 }
 
 .tooltiptext {

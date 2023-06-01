@@ -10,6 +10,7 @@
   const createNewNoteButton = document.querySelector('.createNewNoteButton');
   const optionsButton = document.querySelector('.optionsButton');
   const deleteNotesButton = document.querySelector(".deleteNotesButton");
+  const cancelButton = document.querySelector(".cancelButton");
 
   const customNoteInput = document.createElement('textarea');
   const customTitleInput = document.createElement('input');
@@ -93,7 +94,7 @@
       confirmButton.type = 'submit';
       confirmButton.className = 'confirmButton';
       confirmButtonStyle.className = "bi bi-check-square";
-      confirmButtonStyle.style = "font-size: 20px;";
+      cancelButton.style = 'visibility: visible;';
 
       renameForm.appendChild(renameInput);
       confirmButton.appendChild(confirmButtonStyle);
@@ -114,8 +115,8 @@
       customNoteButton.type = 'submit';
       customNoteButton.className = 'confirmNoteButton';
       confirmButton.className = "bi bi-check-square";
-      confirmButton.style = "font-size: 20px;";
       customNoteInput.style = `height: ${storedInputValuesRes.storedInputValues.height}px;`;
+      cancelButton.style = 'visibility: visible;';
 
       // update input values with saved input values so that the note saves
       customTitleInput.value = storedInputValuesRes.storedInputValues.title;

@@ -15,6 +15,7 @@
   const createNewNoteButton = document.querySelector('.createNewNoteButton');
   const noteList = document.querySelector('.noteList');
   const newCategoryButton = document.querySelector('.createNewCategory');
+  const cancelButton = document.querySelector('.cancelButton');
 
   // TODO:
   // add a color picker but limit it to only some optimizied colors that won't clash with the design
@@ -240,6 +241,17 @@
     });
   }
 
+  function closeInputs(e) {
+    for (const key of selectedText) {
+      if (e.target) {
+        key.rename = false;
+        key.customNote = false;
+      }
+    }
+
+    chrome.storage.local.set({ "selectedText": selectedText });
+  }
+
   // send the updated array back to background.js
   chrome.runtime.sendMessage({ message: selectedText });
 
@@ -253,4 +265,5 @@
   createNewNote.addEventListener('keyup', saveUserInput);
   noteList.addEventListener('click', editNote);
   newCategoryButton.addEventListener('click', createNewCategory);
+  cancelButton.addEventListener('click', closeInputs);
 })();
