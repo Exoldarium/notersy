@@ -12,8 +12,9 @@
   const deleteNotesButton = document.querySelector(".deleteNotesButton");
   const cancelButton = document.querySelector(".cancelButton");
   const noteTip = document.querySelector('.noteTip');
+  const textEditDiv = document.querySelector('.textEdit');
 
-  const customNoteInput = document.createElement('textarea');
+  const customNoteInput = document.createElement('div');
   const customTitleInput = document.createElement('input');
   const customNoteButton = document.createElement('button');
 
@@ -106,23 +107,24 @@
     // check if the user wants to add a custom note
     if (obj.customNote) {
       const confirmButton = document.createElement('i');
+      textEditDiv.style.display = 'flex';
 
       customTitleInput.type = 'text';
       customTitleInput.id = obj.id;
       customTitleInput.className = 'titleInput';
       customTitleInput.placeholder = "Note Title";
       customNoteInput.id = obj.id;
+      customNoteInput.contentEditable = true;
       customNoteInput.className = "textInput";
       customNoteButton.id = obj.id
       customNoteButton.type = 'submit';
       customNoteButton.className = 'confirmNoteButton';
       confirmButton.className = "bi bi-check-square";
-      customNoteInput.style = `height: ${storedInputValuesRes.storedInputValues.height}px;`;
       cancelButton.style = 'visibility: visible;';
 
       // update input values with saved input values so that the note saves
       customTitleInput.value = storedInputValuesRes.storedInputValues.title;
-      customNoteInput.value = storedInputValuesRes.storedInputValues.text;
+      customNoteInput.innerText = storedInputValuesRes.storedInputValues.text;
 
       createNewNote.appendChild(customTitleInput);
       createNewNote.appendChild(customNoteInput);

@@ -16,6 +16,7 @@
   const noteList = document.querySelector('.noteList');
   const newCategoryButton = document.querySelector('.createNewCategory');
   const cancelButton = document.querySelector('.cancelButton');
+  const textEditDiv = document.querySelector('.customizeTextButton');
 
   // TODO:
   // add a color picker but limit it to only some optimizied colors that won't clash with the design
@@ -24,14 +25,8 @@
   // TODO:
   // try to see if we can remove window.confirm from delete category and add custom menu like in options
   // TODO:
-  // try usind div contenteditable instead of textarea, instead of text area value we could access divs textcontent?
-
-  function getSelection() {
-    const selObj = document.getSelection().toString();
-    console.log(document.getSelection());
-  }
-
-  document.querySelector('.createNewNote').addEventListener('mousedown', getSelection);
+  // try using div contenteditable instead of textarea, instead of text area value we could access divs textcontent?
+  // https://stackoverflow.com/questions/60581285/execcommand-is-now-obsolete-whats-the-alternative
 
   // rerender the html every time storage changes
   chrome.storage.onChanged.addListener((change) => {
@@ -160,7 +155,7 @@
           edit: false,
           id: self.crypto.randomUUID(),
           title: titleInput.value,
-          text: textInput.value,
+          text: textInput.innerText,
         });
         key.customNote = false;
       }
@@ -172,7 +167,7 @@
         if (key.edit) {
           // add storage values to input values, remove duplicate notes
           key.title = titleInput.value;
-          key.text = textInput.value;
+          key.text = textInput.innerText;
           keys.customNote = false;
           key.edit = false;
           keys.note.pop();
@@ -230,17 +225,19 @@
   // save users note input values and text area height
   function saveUserInput() {
     const titleInput = document.querySelector('input[type="text"]');
-    const textInput = document.querySelector('textarea');
+    const textInput = document.querySelector('.textInput');
+
+    // console.log(textInput.children);
 
     chrome.storage.local.set({
       "storedInputValues": {
-        height: textInput.scrollHeight,
         title: titleInput.value,
-        text: textInput.value,
+        text: textInput.innerText,
       }
     });
   }
 
+  // closes all active inputs
   function closeInputs(e) {
     for (const key of selectedText) {
       if (e.target) {
@@ -250,6 +247,25 @@
     }
 
     chrome.storage.local.set({ "selectedText": selectedText });
+  }
+
+  // allows user to customize text
+  function customizeText(e) {
+    const button = document.querySelectorAll('button');
+
+    button.forEach(button => {
+      if (button.name === 'bold') {
+        document.execCommand('bold', false, null);
+      }
+      if (button.name === 'italic') {
+        document.execCommand('italic', false, null);
+      }
+      if (button.name === 'underline') {
+        document.execCommand('underline', false, null);
+      }
+    })
+    console.log(e.target);
+    // execCommand is deprecated but it's the only way to create a custom text editor for now
   }
 
   // send the updated array back to background.js
@@ -266,4 +282,5 @@
   noteList.addEventListener('click', editNote);
   newCategoryButton.addEventListener('click', createNewCategory);
   cancelButton.addEventListener('click', closeInputs);
+  textEditDiv.addEventListener('click', customizeText);
 })();
