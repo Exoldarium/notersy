@@ -11,6 +11,7 @@
   const optionsButton = document.querySelector('.optionsButton');
   const deleteNotesButton = document.querySelector(".deleteNotesButton");
   const cancelButton = document.querySelector(".cancelButton");
+  const noteTip = document.querySelector('.noteTip');
 
   const customNoteInput = document.createElement('textarea');
   const customTitleInput = document.createElement('input');
@@ -37,6 +38,7 @@
     // display only the notes from the category that has been clicked
     if (obj.active) {
       categoryButton.style.background = '#96adfc';
+      noteTip.style.display = 'none';
 
       obj.note.map(obj => {
         const url = document.createElement('h2');

@@ -23,6 +23,15 @@
   // text and paragraph formatting
   // TODO:
   // try to see if we can remove window.confirm from delete category and add custom menu like in options
+  // TODO:
+  // try usind div contenteditable instead of textarea, instead of text area value we could access divs textcontent?
+
+  function getSelection() {
+    const selObj = document.getSelection().toString();
+    console.log(document.getSelection());
+  }
+
+  document.querySelector('.createNewNote').addEventListener('mousedown', getSelection);
 
   // rerender the html every time storage changes
   chrome.storage.onChanged.addListener((change) => {
