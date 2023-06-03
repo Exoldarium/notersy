@@ -122,7 +122,7 @@
       cancelButton.style = 'visibility: visible;';
 
       // update input values with saved input values so that the note saves
-      customTitleInput.value = storedInputValuesRes?.storedInputValues?.title || '';
+      customTitleInput.value = storedInputValuesRes?.storedInputValues?.title || ''; // short circuit with optional chanining and add empty value so that it doesn't error out
       customNoteInput.innerHTML = storedInputValuesRes?.storedInputValues?.text || '';
 
       createNewNote.appendChild(customTitleInput);
