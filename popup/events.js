@@ -1,7 +1,7 @@
 (async () => {
   const res = await chrome.storage.local.get('selectedText');
   const storedInputValuesRes = await chrome.storage.local.get('storedInputValues');
-  const storedInputValues = storedInputValuesRes.storedInputValues;
+  const storedInputValues = storedInputValuesRes.storedInputValues || [];
   const selectedText = res.selectedText || [];
 
   const date = new Date().toString().slice(0, 15);
@@ -17,6 +17,8 @@
   const newCategoryButton = document.querySelector('.createNewCategory');
   const cancelButton = document.querySelector('.cancelButton');
   const textEditDiv = document.querySelector('.textEdit');
+
+  console.log(storedInputValuesRes.storedInputValues);
 
   // rerender the html every time storage changes
   chrome.storage.onChanged.addListener((change) => {
@@ -124,7 +126,6 @@
     }
 
     chrome.storage.local.set({ "selectedText": selectedText });
-    chrome.storage.local.set({ "storedInputValues": storedInputValues });
   }
 
   // add custom note input value to local storage or allow user to edit note
@@ -133,6 +134,7 @@
     const titleInput = document.querySelector('.titleInput');
     const textInput = document.querySelector('.textInput');
     const submitButton = document.querySelector('.confirmNoteButton');
+    const textString = JSON.stringify(textInput.innerHTML).replace(/(^"|"$)/g, '');
 
     if (e.target === submitButton) {
       requestSubmit(submitButton);
@@ -145,7 +147,7 @@
           edit: false,
           id: self.crypto.randomUUID(),
           title: titleInput.value,
-          text: textInput.innerText,
+          text: textString,
         });
         key.customNote = false;
       }
@@ -157,7 +159,7 @@
         if (key.edit) {
           // add storage values to input values, remove duplicate notes
           key.title = titleInput.value;
-          key.text = textInput.innerText;
+          key.text = textString;
           keys.customNote = false;
           key.edit = false;
           keys.note.pop();
@@ -216,11 +218,12 @@
   function saveUserInput() {
     const titleInput = document.querySelector('input[type="text"]');
     const textInput = document.querySelector('.textInput');
+    const textString = JSON.stringify(textInput.innerHTML).replace(/(^"|"$)/g, '');
 
     chrome.storage.local.set({
       "storedInputValues": {
         title: titleInput.value,
-        text: textInput.innerText,
+        text: textString,
       }
     });
   }

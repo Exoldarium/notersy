@@ -63,7 +63,7 @@
           link.textContent = obj.title;
         }
 
-        text.textContent = obj.text;
+        text.innerHTML = obj.text;
         text.style = 'white-space: pre-wrap;';
         checkbox.type = 'checkbox';
         checkbox.id = obj.text;
@@ -85,7 +85,6 @@
         notesList.appendChild(notesItem);
       });
     }
-
 
     // check if the rename property is true, if it is allow user to rename category
     if (obj.rename) {
@@ -123,8 +122,8 @@
       cancelButton.style = 'visibility: visible;';
 
       // update input values with saved input values so that the note saves
-      customTitleInput.value = storedInputValuesRes.storedInputValues.title;
-      customNoteInput.innerText = storedInputValuesRes.storedInputValues.text;
+      customTitleInput.value = storedInputValuesRes?.storedInputValues?.title || '';
+      customNoteInput.innerHTML = storedInputValuesRes?.storedInputValues?.text || '';
 
       createNewNote.appendChild(customTitleInput);
       createNewNote.appendChild(customNoteInput);
