@@ -245,9 +245,6 @@
 
   // allow user to customize text
   function customizeText(e) {
-    // // prevent 
-    // if (!e.target.matches('button')) return;
-
     // execCommand is deprecated but it's the only way to create a custom text editor for now
     if (e.target.name === 'bold') {
       document.execCommand('bold', false, null);
@@ -257,6 +254,9 @@
     }
     if (e.target.name === 'underline') {
       document.execCommand('underline', false, null);
+    }
+    if (e.target.name === 'list') {
+      document.execCommand('insertUnorderedList', false, null);
     }
   }
 

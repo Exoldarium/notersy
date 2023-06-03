@@ -132,6 +132,10 @@ li:nth-child(even) {
   background: #ffffff;
 }
 
+p>ul {
+  list-style-type: disc;
+}
+
 /* buttons */
 button {
   cursor: pointer;
