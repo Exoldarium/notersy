@@ -5,7 +5,6 @@
   const selectedText = res.selectedText || [];
 
   const date = new Date().toString().slice(0, 15);
-
   const categoryList = document.querySelector(".categoryList");
   const deleteNotesButton = document.querySelector(".deleteNotesButton");
   const deleteCategoryButton = document.querySelector(".deleteCategoryButton");
@@ -246,7 +245,8 @@
 
   // allow user to customize text
   function customizeText(e) {
-    if (!e.target.matches('button')) return;
+    // // prevent 
+    // if (!e.target.matches('button')) return;
 
     // execCommand is deprecated but it's the only way to create a custom text editor for now
     if (e.target.name === 'bold') {
@@ -270,9 +270,9 @@
   createNewNoteButton.addEventListener('click', addCustomNote);
   renameForm.addEventListener('submit', submitNewName);
   createNewNote.addEventListener('submit', submitCustomNote);
-  createNewNote.addEventListener('keyup', saveUserInput);
   noteList.addEventListener('click', editNote);
   newCategoryButton.addEventListener('click', createNewCategory);
   cancelButton.addEventListener('click', closeInputs);
   textEditDiv.addEventListener('click', customizeText);
+  ['mouseout', 'keyup'].forEach(event => createNewNote.addEventListener(event, saveUserInput));
 })();
