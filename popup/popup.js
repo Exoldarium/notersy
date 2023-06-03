@@ -158,8 +158,8 @@
   const amount = values.reduce((tally, currentValue) => tally + currentValue.note.length, 0);
 
   // display the amount of categories on the popup icon
-  chrome.action.setBadgeText({ text: amount.toString() });
-  chrome.storage.local.set({ "selectedText": selectedText });
+  await chrome.action.setBadgeText({ text: amount.toString() });
+  await chrome.storage.local.set({ "selectedText": selectedText });
 
   optionsButton.addEventListener('click', goToOptionsPage);
 })();

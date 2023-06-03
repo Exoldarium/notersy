@@ -16,17 +16,7 @@
   const noteList = document.querySelector('.noteList');
   const newCategoryButton = document.querySelector('.createNewCategory');
   const cancelButton = document.querySelector('.cancelButton');
-  const textEditDiv = document.querySelector('.customizeTextButton');
-
-  // TODO:
-  // add a color picker but limit it to only some optimizied colors that won't clash with the design
-  // TODO: 
-  // text and paragraph formatting
-  // TODO:
-  // try to see if we can remove window.confirm from delete category and add custom menu like in options
-  // TODO:
-  // try using div contenteditable instead of textarea, instead of text area value we could access divs textcontent?
-  // https://stackoverflow.com/questions/60581285/execcommand-is-now-obsolete-whats-the-alternative
+  const textEditDiv = document.querySelector('.textEdit');
 
   // rerender the html every time storage changes
   chrome.storage.onChanged.addListener((change) => {
@@ -227,8 +217,6 @@
     const titleInput = document.querySelector('input[type="text"]');
     const textInput = document.querySelector('.textInput');
 
-    // console.log(textInput.children);
-
     chrome.storage.local.set({
       "storedInputValues": {
         title: titleInput.value,
@@ -246,26 +234,27 @@
       }
     }
 
+    storedInputValues.title = '';
+    storedInputValues.text = '';
+
     chrome.storage.local.set({ "selectedText": selectedText });
+    chrome.storage.local.set({ "storedInputValues": storedInputValues });
   }
 
-  // allows user to customize text
+  // allow user to customize text
   function customizeText(e) {
-    const button = document.querySelectorAll('button');
+    if (!e.target.matches('button')) return;
 
-    button.forEach(button => {
-      if (button.name === 'bold') {
-        document.execCommand('bold', false, null);
-      }
-      if (button.name === 'italic') {
-        document.execCommand('italic', false, null);
-      }
-      if (button.name === 'underline') {
-        document.execCommand('underline', false, null);
-      }
-    })
-    console.log(e.target);
     // execCommand is deprecated but it's the only way to create a custom text editor for now
+    if (e.target.name === 'bold') {
+      document.execCommand('bold', false, null);
+    }
+    if (e.target.name === 'italic') {
+      document.execCommand('italic', false, null);
+    }
+    if (e.target.name === 'underline') {
+      document.execCommand('underline', false, null);
+    }
   }
 
   // send the updated array back to background.js

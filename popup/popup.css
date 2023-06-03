@@ -1,5 +1,3 @@
-/* TODO: organize css file better */
-
 html {
   height: fit-content;
   width: 750px;
@@ -11,12 +9,9 @@ body {
   background: #80808030;
 }
 
+/* headers */
 .header {
   display: flex;
-}
-
-.bi {
-  font-size: 20px;
 }
 
 h1 {
@@ -30,49 +25,59 @@ h2 {
   font-size: 15px;
 }
 
-div {
-  width: 46rem;
-  padding: 0.5rem;
+.noteList>li>div>h2 {
+  padding: 0.5rem 0.2rem 0.5rem 0.2rem;
+  margin: 0;
+  flex: 1;
 }
 
-a {
-  text-decoration: none;
-  color: black;
+h3,
+p {
+  margin: 0;
 }
 
-button {
+/* inputs */
+input[type="checkbox"] {
   cursor: pointer;
-  box-shadow: 0 3px 10px rgb(0 0 0 / 0.3);
 }
 
-.buttons {
+.renameCategory>input {
+  height: 1.5rem;
+  border-radius: 5px;
+  border: 1px solid black;
+  margin-bottom: 0.5rem;
+  margin-right: 0.5rem;
+  width: 65%;
+}
+
+.titleInput {
+  height: 1.5rem;
+  width: 65%;
+  border-radius: 5px;
+  border: 1px solid black;
+  margin-bottom: 0.5rem;
+}
+
+.textInput {
+  display: inline-block;
+  height: fit-content;
+  min-height: 7rem;
+  font-size: 14px;
+  width: 45rem;
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
+  background: #fff;
+  border: 1px solid black;
+  font-family: --apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.textInput>div {
   padding: 0;
+  width: inherit;
+  height: inherit;
 }
 
-
-.buttons>button,
-.cancelButton {
-  background: #b5c689;
-  cursor: pointer;
-  box-shadow: 0 3px 10px rgb(0 0 0 / 0.3);
-  font-size: 13px;
-  border-radius: 7px;
-  border: none;
-  height: 2rem;
-  margin: 0.2rem;
-}
-
-main>button {
-  background: #b5c689;
-  cursor: pointer;
-  box-shadow: 0 3px 10px rgb(0 0 0 / 0.3);
-  font-size: 13px;
-  border-radius: 7px;
-  border: none;
-  height: 2rem;
-  margin: 0.2rem;
-}
-
+/* lists */
 .categoryList {
   display: flex;
   flex-wrap: wrap;
@@ -81,10 +86,6 @@ main>button {
   list-style: none;
   padding: 0;
   width: fit-content;
-}
-
-input[type="checkbox"] {
-  cursor: pointer;
 }
 
 .noteList {
@@ -109,10 +110,59 @@ input[type="checkbox"] {
   padding: 0;
 }
 
-.noteList>li>div>h2 {
+.noteList>li>p {
   padding: 0.5rem 0.2rem 0.5rem 0.2rem;
-  margin: 0;
-  flex: 1;
+  font-size: 14px;
+}
+
+.categoryList>li {
+  width: fit-content;
+  height: fit-content;
+  padding: 0;
+  margin: 0.2rem;
+  border-radius: 20px;
+  border: none;
+}
+
+li:nth-child(odd) {
+  background: #ffffff;
+}
+
+li:nth-child(even) {
+  background: #ffffff;
+}
+
+/* buttons */
+button {
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.3);
+}
+
+.buttons {
+  padding: 0;
+}
+
+.buttons>button,
+.cancelButton {
+  background: #b5c689;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.3);
+  font-size: 13px;
+  border-radius: 7px;
+  border: none;
+  height: 2rem;
+  margin: 0.2rem;
+}
+
+main>button {
+  background: #b5c689;
+  cursor: pointer;
+  box-shadow: 0 3px 10px rgb(0 0 0 / 0.3);
+  font-size: 13px;
+  border-radius: 7px;
+  border: none;
+  height: 2rem;
+  margin: 0.2rem;
 }
 
 .donationsButton {
@@ -121,7 +171,7 @@ input[type="checkbox"] {
   background: inherit;
   border: none;
   font-size: 25px;
-  padding: 0.5rem 1rem 0 0;
+  padding: 0.3rem 1rem 0 0.5rem;
 }
 
 .editButton,
@@ -158,20 +208,6 @@ input[type="checkbox"] {
   font-size: 13px;
 }
 
-.noteList>li>p {
-  padding: 0.5rem 0.2rem 0.5rem 0.2rem;
-  font-size: 14px;
-}
-
-.categoryList>li {
-  width: fit-content;
-  height: fit-content;
-  padding: 0;
-  margin: 0.2rem;
-  border-radius: 20px;
-  border: none;
-}
-
 .categoryList>li>button {
   border-radius: 20px;
   border: none;
@@ -184,62 +220,8 @@ input[type="checkbox"] {
   font-weight: 500;
 }
 
-li:nth-child(odd) {
-  background: #ffffff;
-}
-
-li:nth-child(even) {
-  background: #ffffff;
-}
-
-h3,
-p {
-  margin: 0;
-}
-
-.renameCategory>input {
-  height: 1.5rem;
-  border-radius: 5px;
-  border: 1px solid black;
-  margin-bottom: 0.5rem;
-  margin-right: 0.5rem;
-  width: 65%;
-}
-
-.createNewNote {
-  display: flex;
-  flex-direction: column;
-}
-
 .createNewNote>button {
   width: 2.5rem;
-}
-
-.titleInput {
-  height: 1.5rem;
-  width: 65%;
-  border-radius: 5px;
-  border: 1px solid black;
-  margin-bottom: 0.5rem;
-}
-
-.textInput {
-  display: inline-block;
-  height: fit-content;
-  min-height: 7rem;
-  font-size: 14px;
-  width: 45rem;
-  border-radius: 5px;
-  margin-bottom: 0.5rem;
-  background: #fff;
-  border: 1px solid black;
-  font-family: --apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
-
-.textInput>div {
-  padding: 0;
-  width: inherit;
-  height: inherit;
 }
 
 .buttons>button .tooltiptext {
@@ -259,20 +241,6 @@ p {
 .cancelButton {
   visibility: hidden;
   background: #F88379 !important;
-}
-
-.tooltiptext {
-  visibility: hidden;
-  width: 200px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  position: absolute;
-  margin-top: -120px;
-  z-index: 1;
-  opacity: 0.9;
 }
 
 .donationsButton>.tooltiptext {
@@ -302,6 +270,57 @@ p {
   visibility: visible;
 }
 
+.customizeTextButton {
+  margin-right: 0.5rem;
+  width: 1.7rem;
+  height: 1.7rem;
+  font-size: 17px;
+  font-weight: bold;
+}
+
+.customizeTextButton.italic {
+  font-style: italic;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+.customizeTextButton.underline {
+  text-decoration: underline;
+}
+
+.bi {
+  font-size: 20px;
+}
+
+/*  other */
+div {
+  width: 46rem;
+  padding: 0.5rem;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+.createNewNote {
+  display: flex;
+  flex-direction: column;
+}
+
+.tooltiptext {
+  visibility: hidden;
+  width: 200px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  position: absolute;
+  margin-top: -120px;
+  z-index: 1;
+  opacity: 0.9;
+}
+
 .customNotes {
   padding: 0;
 }
@@ -309,10 +328,5 @@ p {
 .textEdit {
   display: none;
   flex-direction: row;
-}
-
-.customizeTextButton {
-  margin-right: 0.5rem;
-  width: fit-content;
-  height: fit-content;
+  padding: 1rem 0 1rem 0;
 }
