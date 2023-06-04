@@ -1,10 +1,9 @@
 import DOMPurify from "dompurify";
+import { getStorage, setStorage } from "../lib/setupStorage";
 
 (async () => {
-  const res = await chrome.storage.local.get('selectedText');
-  const storedInputValuesRes = await chrome.storage.local.get('storedInputValues');
-  const storedInputValues = storedInputValuesRes.storedInputValues || [];
-  const selectedText = res.selectedText || [];
+  const selectedText = await getStorage('selectedText');
+  const storedInputValues = await getStorage('storedInputValues');
 
   const date = new Date().toString().slice(0, 15);
   const categoryList = document.querySelector(".categoryList");
@@ -18,6 +17,11 @@ import DOMPurify from "dompurify";
   const newCategoryButton = document.querySelector('.createNewCategory');
   const cancelButton = document.querySelector('.cancelButton');
   const textEditDiv = document.querySelector('.textEdit');
+
+  // TODO:
+  // fix readme (add vite etc)
+  // TODO: 
+  // try testing
 
   // rerender the html every time storage changes
   chrome.storage.onChanged.addListener((change) => {
@@ -38,9 +42,8 @@ import DOMPurify from "dompurify";
         key.active = true;
       }
     }
-
     // update storage
-    chrome.storage.local.set({ "selectedText": selectedText });
+    setStorage('selectedText', selectedText);;
   }
 
   // delete selected notes
@@ -60,7 +63,7 @@ import DOMPurify from "dompurify";
       }
     });
 
-    chrome.storage.local.set({ "selectedText": selectedText });
+    setStorage('selectedText', selectedText);
   }
 
   // deletes active category
@@ -76,7 +79,7 @@ import DOMPurify from "dompurify";
       }
     }
 
-    chrome.storage.local.set({ "selectedText": selectedText })
+    setStorage('selectedText', selectedText);
   }
 
   // renders rename menu on button click
@@ -88,7 +91,7 @@ import DOMPurify from "dompurify";
       }
     }
 
-    chrome.storage.local.set({ "selectedText": selectedText });
+    setStorage('selectedText', selectedText);
   }
 
   // grabs user input and renames the category
@@ -96,6 +99,7 @@ import DOMPurify from "dompurify";
     e.preventDefault();
     const input = document.querySelector('input[type="text"]');
     const submitButton = document.querySelector('.confirmButton');
+    const cleanString = DOMPurify.sanitize(input.value);
 
     if (e.target === submitButton) {
       requestSubmit(submitButton);
@@ -104,12 +108,12 @@ import DOMPurify from "dompurify";
     // update the category name with new name
     for (const key of selectedText) {
       if (key.rename) {
-        key.name = input.value;
+        key.name = cleanString;
         key.rename = false;
       }
     }
 
-    chrome.storage.local.set({ "selectedText": selectedText });
+    setStorage('selectedText', selectedText);
   }
 
   // allow user to add custom notes
@@ -124,7 +128,7 @@ import DOMPurify from "dompurify";
       }
     }
 
-    chrome.storage.local.set({ "selectedText": selectedText });
+    setStorage('selectedText', selectedText);
   }
 
   // add custom note input value to local storage or allow user to edit note
@@ -133,6 +137,7 @@ import DOMPurify from "dompurify";
     const titleInput = document.querySelector('.titleInput');
     const textInput = document.querySelector('.textInput');
     const submitButton = document.querySelector('.confirmNoteButton');
+    const cleanInputString = DOMPurify.sanitize(titleInput.value)
     const cleanString = DOMPurify.sanitize(textInput.innerHTML);
     const textString = JSON.stringify(cleanString).replace(/(^"|"$)/g, '');
 
@@ -146,7 +151,7 @@ import DOMPurify from "dompurify";
         key.note.push({
           edit: false,
           id: self.crypto.randomUUID(),
-          title: titleInput.value,
+          title: cleanInputString,
           text: textString,
         });
         key.customNote = false;
@@ -158,7 +163,7 @@ import DOMPurify from "dompurify";
       for (const key of keys.note) {
         if (key.edit) {
           // add storage values to input values, remove duplicate notes
-          key.title = titleInput.value;
+          key.title = cleanInputString;
           key.text = textString;
           keys.customNote = false;
           key.edit = false;
@@ -170,8 +175,8 @@ import DOMPurify from "dompurify";
     storedInputValues.title = '';
     storedInputValues.text = '';
 
-    chrome.storage.local.set({ "selectedText": selectedText });
-    chrome.storage.local.set({ "storedInputValues": storedInputValues });
+    setStorage('selectedText', selectedText);
+    setStorage("storedInputValues", storedInputValues);
   }
 
   // allows user to edit the note
@@ -185,7 +190,7 @@ import DOMPurify from "dompurify";
           key.edit = true;
 
           // add the text and title values to storage
-          chrome.storage.local.set({
+          chrome.storage.sync.set({
             "storedInputValues": {
               title: key.title,
               text: key.text,
@@ -195,7 +200,7 @@ import DOMPurify from "dompurify";
       }
     }
 
-    chrome.storage.local.set({ "selectedText": selectedText });
+    setStorage('selectedText', selectedText);
   }
 
   // add new category on button click
@@ -211,19 +216,20 @@ import DOMPurify from "dompurify";
       note: []
     });
 
-    chrome.storage.local.set({ "selectedText": selectedText });
+    setStorage('selectedText', selectedText);
   }
 
   // save users note input values and text area height
   function saveUserInput() {
     const titleInput = document.querySelector('input[type="text"]');
     const textInput = document.querySelector('.textInput');
+    const cleanInputString = DOMPurify.sanitize(titleInput.value)
     const cleanString = DOMPurify.sanitize(textInput.innerHTML);
     const textString = JSON.stringify(cleanString).replace(/(^"|"$)/g, '');
 
-    chrome.storage.local.set({
+    chrome.storage.sync.set({
       "storedInputValues": {
-        title: titleInput.value,
+        title: cleanInputString,
         text: textString,
       }
     });
@@ -241,8 +247,8 @@ import DOMPurify from "dompurify";
     storedInputValues.title = '';
     storedInputValues.text = '';
 
-    chrome.storage.local.set({ "selectedText": selectedText });
-    chrome.storage.local.set({ "storedInputValues": storedInputValues });
+    setStorage('selectedText', selectedText);
+    setStorage("storedInputValues", storedInputValues);
   }
 
   // allow user to customize text
@@ -262,8 +268,17 @@ import DOMPurify from "dompurify";
     }
   }
 
+  // grab textcontent from notes
+  const noteText = [];
+  for (const node of noteList.childNodes) {
+    for (const nodes of node.childNodes) {
+      noteText.push(nodes.textContent + '\n\n');
+    }
+  }
+
   // send the updated array back to background.js
   chrome.runtime.sendMessage({ message: selectedText });
+  setStorage('noteText', noteText);
 
   deleteNotesButton.addEventListener('click', deleteCheckedInput);
   deleteCategoryButton.addEventListener('click', deleteCategory);

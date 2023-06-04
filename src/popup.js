@@ -1,10 +1,10 @@
 import DOMPurify from 'dompurify';
 import '../styles/popup.css';
+import { getStorage, setStorage } from '../lib/setupStorage';
 
 (async () => {
-  const res = await chrome.storage.local.get('selectedText');
-  const storedInputValuesRes = await chrome.storage.local.get('storedInputValues');
-  const selectedText = res.selectedText || [];
+  const storedInputValuesRes = await getStorage('storedInputValues');
+  const selectedText = await getStorage('selectedText');
 
   const notesList = document.querySelector(".noteList");
   const categoryList = document.querySelector(".categoryList");
@@ -125,8 +125,8 @@ import '../styles/popup.css';
       cancelButton.style = 'visibility: visible;';
 
       // update input values with saved input values so that the note saves
-      customTitleInput.value = storedInputValuesRes?.storedInputValues?.title || ''; // short circuit with optional chanining and add empty value so that it doesn't error out
-      customNoteInput.innerHTML = DOMPurify.sanitize(storedInputValuesRes?.storedInputValues?.text) || '';
+      customTitleInput.value = DOMPurify.sanitize(storedInputValuesRes?.title) || ''; // short circuit with optional chanining and add empty value so that it doesn't error out
+      customNoteInput.innerHTML = DOMPurify.sanitize(storedInputValuesRes?.text) || '';
 
       createNewNote.appendChild(customTitleInput);
       createNewNote.appendChild(customNoteInput);
@@ -161,7 +161,7 @@ import '../styles/popup.css';
 
   // display the amount of categories on the popup icon
   await chrome.action.setBadgeText({ text: amount.toString() });
-  await chrome.storage.local.set({ "selectedText": selectedText });
+  setStorage('selectedText', selectedText);
 
   optionsButton.addEventListener('click', goToOptionsPage);
 })();

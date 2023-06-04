@@ -1,21 +1,11 @@
 import '../styles/options.css';
 
 (async () => {
-  const res = await chrome.storage.local.get('selectedText');
-  const selectedText = res.selectedText || [];
-
+  const selectedText = await getStorage('noteText');
   const confirmClearDiv = document.querySelector('.confirmClear');
   const clearStorageButton = document.querySelector('.clearStorageButton');
   const downloadButton = document.querySelector('.downloadButton');
   const downloadDiv = document.querySelector('.download');
-
-  // add note text and title data to an array
-  const dataArr = [];
-  selectedText.map(notes => {
-    notes.note.map((note) => {
-      dataArr.push(note.title + '\n', note.text + '\n\n');
-    })
-  });
 
   // prompt the user to confirm
   function clearStorage() {
@@ -25,14 +15,13 @@ import '../styles/options.css';
   // clears the storage and all saved data
   function confirmClear(e) {
     if (e.target.textContent === 'OK') {
-      chrome.storage.local.clear();
+      chrome.storage.sync.clear();
       chrome.runtime.sendMessage({ clearStorage: 'clear' });
       confirmClearDiv.classList.remove('confirmActive');
     }
     if (e.target.textContent === 'Cancel') {
       confirmClearDiv.classList.remove('confirmActive');
     }
-    dataArr.length = 0;
     location.reload();
   }
 
@@ -51,7 +40,7 @@ import '../styles/options.css';
   // download the file after the button has been clicked
   function downloadFile(e) {
     if (e.target) {
-      prepareFile('notes.txt', dataArr.join(''));
+      prepareFile('notes.txt', selectedText.join(''));
     }
   }
 
