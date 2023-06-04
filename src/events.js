@@ -1,3 +1,5 @@
+import DOMPurify from "dompurify";
+
 (async () => {
   const res = await chrome.storage.local.get('selectedText');
   const storedInputValuesRes = await chrome.storage.local.get('storedInputValues');
@@ -16,8 +18,6 @@
   const newCategoryButton = document.querySelector('.createNewCategory');
   const cancelButton = document.querySelector('.cancelButton');
   const textEditDiv = document.querySelector('.textEdit');
-
-  console.log(storedInputValuesRes.storedInputValues);
 
   // rerender the html every time storage changes
   chrome.storage.onChanged.addListener((change) => {
@@ -133,7 +133,8 @@
     const titleInput = document.querySelector('.titleInput');
     const textInput = document.querySelector('.textInput');
     const submitButton = document.querySelector('.confirmNoteButton');
-    const textString = JSON.stringify(textInput.innerHTML).replace(/(^"|"$)/g, '');
+    const cleanString = DOMPurify.sanitize(textInput.innerHTML);
+    const textString = JSON.stringify(cleanString).replace(/(^"|"$)/g, '');
 
     if (e.target === submitButton) {
       requestSubmit(submitButton);
@@ -217,7 +218,8 @@
   function saveUserInput() {
     const titleInput = document.querySelector('input[type="text"]');
     const textInput = document.querySelector('.textInput');
-    const textString = JSON.stringify(textInput.innerHTML).replace(/(^"|"$)/g, '');
+    const cleanString = DOMPurify.sanitize(textInput.innerHTML);
+    const textString = JSON.stringify(cleanString).replace(/(^"|"$)/g, '');
 
     chrome.storage.local.set({
       "storedInputValues": {

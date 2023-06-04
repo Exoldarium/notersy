@@ -1,3 +1,6 @@
+import DOMPurify from 'dompurify';
+import '../styles/popup.css';
+
 (async () => {
   const res = await chrome.storage.local.get('selectedText');
   const storedInputValuesRes = await chrome.storage.local.get('storedInputValues');
@@ -63,7 +66,7 @@
           link.textContent = obj.title;
         }
 
-        text.innerHTML = obj.text;
+        text.innerHTML = DOMPurify.sanitize(obj.text);
         text.style = 'white-space: pre-wrap;';
         checkbox.type = 'checkbox';
         checkbox.id = obj.text;
@@ -123,7 +126,7 @@
 
       // update input values with saved input values so that the note saves
       customTitleInput.value = storedInputValuesRes?.storedInputValues?.title || ''; // short circuit with optional chanining and add empty value so that it doesn't error out
-      customNoteInput.innerHTML = storedInputValuesRes?.storedInputValues?.text || '';
+      customNoteInput.innerHTML = DOMPurify.sanitize(storedInputValuesRes?.storedInputValues?.text) || '';
 
       createNewNote.appendChild(customTitleInput);
       createNewNote.appendChild(customNoteInput);
