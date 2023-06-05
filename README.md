@@ -20,3 +20,7 @@ Design wise, i tried to keep the extension minimalistic as per Chrome's own desi
 
 I'm using vanilla JavaScript, HTML and CSS.
 The extension is bundled using Vite and CRXJS
+
+## Setup
+Clone this repository.
+Run ```npm run dev``` and load dist folder into chrome
