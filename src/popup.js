@@ -21,12 +21,6 @@ import '../styles/popup.css';
   const customTitleInput = document.createElement('input');
   const customNoteButton = document.createElement('button');
 
-  console.log({ selectedText });
-  console.log(storedInputValuesRes);
-
-  // TODO: 
-  // remove logs
-
   // hide create and delete notes button if there are no categories
   if (selectedText.length === 0) {
     createNewNoteButton.style.display = 'none';

@@ -268,7 +268,7 @@ import DOMPurify from "dompurify";
       noteText.push(nodes.textContent + '\n\n');
     }
   }
-  console.log(noteText);
+
   // send the updated array back to background.js
   chrome.runtime.sendMessage({ message: selectedText });
   chrome.storage.local.set({ "noteText": noteText });

@@ -3,7 +3,6 @@ import '../styles/options.css';
 (async () => {
   const res = await chrome.storage.local.get('noteText');
   const noteText = res.noteText || [];
-  console.log(res);
 
   const confirmClearDiv = document.querySelector('.confirmClear');
   const clearStorageButton = document.querySelector('.clearStorageButton');
