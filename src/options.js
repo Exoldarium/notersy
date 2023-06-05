@@ -1,7 +1,10 @@
 import '../styles/options.css';
 
 (async () => {
-  const selectedText = await getStorage('noteText');
+  const res = await chrome.storage.local.get('noteText');
+  const noteText = res.noteText || [];
+  console.log(res);
+
   const confirmClearDiv = document.querySelector('.confirmClear');
   const clearStorageButton = document.querySelector('.clearStorageButton');
   const downloadButton = document.querySelector('.downloadButton');
@@ -15,7 +18,7 @@ import '../styles/options.css';
   // clears the storage and all saved data
   function confirmClear(e) {
     if (e.target.textContent === 'OK') {
-      chrome.storage.sync.clear();
+      chrome.storage.local.clear();
       chrome.runtime.sendMessage({ clearStorage: 'clear' });
       confirmClearDiv.classList.remove('confirmActive');
     }
@@ -40,7 +43,7 @@ import '../styles/options.css';
   // download the file after the button has been clicked
   function downloadFile(e) {
     if (e.target) {
-      prepareFile('notes.txt', selectedText.join(''));
+      prepareFile('notes.txt', noteText.join(''));
     }
   }
 

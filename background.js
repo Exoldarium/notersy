@@ -1,5 +1,3 @@
-import { getStorage, setStorage } from "./lib/setupStorage";
-
 // add extension to context menu
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
@@ -23,7 +21,8 @@ chrome.runtime.onInstalled.addListener(() => {
 
 (async () => {
   // grab data from storage or initialize an empty array if there's nothing in storage
-  const arr = await getStorage('selectedText');
+  const res = await chrome.storage.local.get('selectedText');
+  const arr = res.selectedText || [];
   const date = new Date().toString().slice(0, 15);
 
   // update local storage with new data from popup.js
@@ -91,7 +90,7 @@ chrome.runtime.onInstalled.addListener(() => {
 
   // add note to local storage
   chrome.contextMenus.onClicked.addListener(() => {
-    setStorage('selectedText', arr);
+    chrome.storage.local.set({ "selectedText": arr });
   });
   console.log({ arr });
 })();
