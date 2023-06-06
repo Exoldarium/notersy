@@ -19,6 +19,9 @@ import DOMPurify from "dompurify";
   const cancelButton = document.querySelector('.cancelButton');
   const textEditDiv = document.querySelector('.textEdit');
 
+  // TODO:
+  // try moving our objects to a separate file
+
   // rerender the html every time storage changes
   chrome.storage.onChanged.addListener((change) => {
     if (change.selectedText || change.storedNote) {
@@ -247,7 +250,7 @@ import DOMPurify from "dompurify";
 
   // allow user to customize text
   function customizeText(e) {
-    // execCommand is deprecated but it's the only way to create a custom text editor for now
+    // execCommand is deprecated but it still works for now
     if (e.target.name === 'bold') {
       document.execCommand('bold', false, null);
     }
@@ -262,12 +265,21 @@ import DOMPurify from "dompurify";
     }
   }
 
+  // inserts only text, prevents users from copy pasting the whole page html and pasting into the contentEditable div
+  function onlyPasteText(e) {
+    e.preventDefault();
+    const data = e.clipboardData.getData('text/plain');
+    document.execCommand('insertText', false, data);
+  }
+
+  // get textContent from notes, used in file download
   const noteText = [];
   for (const node of noteList.childNodes) {
     for (const nodes of node.childNodes) {
       noteText.push(nodes.textContent + '\n\n');
     }
   }
+
 
   // send the updated array back to background.js
   chrome.runtime.sendMessage({ message: selectedText });
@@ -285,4 +297,5 @@ import DOMPurify from "dompurify";
   cancelButton.addEventListener('click', closeInputs);
   textEditDiv.addEventListener('click', customizeText);
   ['mouseout', 'keyup'].forEach(event => createNewNote.addEventListener(event, saveUserInput));
+  createNewNote.addEventListener('paste', onlyPasteText);
 })();
