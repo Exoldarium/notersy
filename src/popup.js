@@ -73,12 +73,9 @@ import '../styles/popup.css';
         div.className = 'notesDiv';
 
         url.appendChild(link);
-        div.appendChild(url);
         editButton.appendChild(editButtonIcon);
-        div.appendChild(editButton);
-        div.appendChild(checkbox)
-        notesItem.appendChild(div);
-        notesItem.appendChild(text);
+        div.append(url, editButton, checkbox);
+        notesItem.append(div, text);
         notesList.appendChild(notesItem);
       });
     }
@@ -122,10 +119,8 @@ import '../styles/popup.css';
       customTitleInput.value = storedInputValuesRes?.storedInputValues?.title || ''; // short circuit with optional chanining and add empty value so that it doesn't error out
       customNoteInput.innerHTML = storedInputValuesRes?.storedInputValues?.text || '';
 
-      createNewNote.appendChild(customTitleInput);
-      createNewNote.appendChild(customNoteInput);
       customNoteButton.appendChild(confirmButton);
-      createNewNote.appendChild(customNoteButton);
+      createNewNote.append(customTitleInput, customNoteInput, customNoteButton);
     }
 
     categoryButton.id = obj.id;
