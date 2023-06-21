@@ -1,7 +1,7 @@
 // add extension to context menu
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
-    "title": "Note Taker",
+    "title": "Notersy",
     "contexts": ["selection"],
     "id": "menuItemId",
   });

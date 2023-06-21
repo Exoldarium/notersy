@@ -19,9 +19,6 @@ import DOMPurify from "dompurify";
   const cancelButton = document.querySelector('.cancelButton');
   const textEditDiv = document.querySelector('.textEdit');
 
-  // TODO:
-  // try moving our objects to a separate file
-
   // rerender the html every time storage changes
   chrome.storage.onChanged.addListener((change) => {
     if (change.selectedText || change.storedNote) {
