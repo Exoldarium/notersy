@@ -2,7 +2,7 @@
 
 A small chrome extension that allows users to add, create, update and delete notes, group them in categories. The notes are saved in Chrome's local storage so they can be accesed at any time.
 
-You can get live extension [here](https://chrome.google.com/webstore/detail/notersy/ffpmjnpjajlkfaidlonjegneehmccaja/related) 
+You can get the extension [here](https://chrome.google.com/webstore/detail/notersy/ffpmjnpjajlkfaidlonjegneehmccaja/related) 
 
 ## Description:
 
