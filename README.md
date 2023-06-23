@@ -6,19 +6,19 @@ You can get the extension [here](https://chrome.google.com/webstore/detail/noter
 
 ## Main Features
 
-Add notes through the context menu
+- Add notes through the context menu
 
-Create categories and organize your notes however you wish
+- Create categories and organize your notes however you wish
 
-Delete notes and/or categories when you no longer need them
+- Delete notes and/or categories when you no longer need them
 
-Create custom notes and format them using the in-built rich text editor
+- Create custom notes and format them using the in-built rich text editor
 
-Edit notes or change their content 
+- Edit notes or change their content 
 
-Your data will persist even if your browser is closed
+- Your data will persist even if your browser is closed
 
-Backup/download your notes
+- Backup/download your notes
 
 ## Description:
 
