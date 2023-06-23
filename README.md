@@ -2,6 +2,8 @@
 
 A small chrome extension that allows users to add, create, update and delete notes, group them in categories. The notes are saved in Chrome's local storage so they can be accesed at any time.
 
+You can get live extension [here](https://chrome.google.com/webstore/detail/notersy/ffpmjnpjajlkfaidlonjegneehmccaja/related) 
+
 ## Description:
 
 This was my submission for CS50x final project, although it has been changed considerably since i submited it and became a much bigger application than i originally intended it to be. It will probably change more as i continue to add more features to it and fix bugs that i encounter. 
@@ -19,7 +21,7 @@ Design wise, i tried to keep the extension minimalistic as per Chrome's own desi
 ## Technologies used
 
 I'm using vanilla JavaScript, HTML and CSS.
-The extension is bundled using Vite and CRXJS
+The extension is bundled using [Vite](https://vitejs.dev/) and [CRXJS](https://crxjs.dev/vite-plugin/)
 
 ## Setup
 Clone this repository.
