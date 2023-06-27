@@ -20,6 +20,10 @@ You can get the extension [here](https://chrome.google.com/webstore/detail/noter
 
 - Backup/download your notes
 
+## Known bugs
+
+- The notes are only saved from the active category
+
 ## Description:
 
 This was my submission for CS50x final project, although it has been changed considerably since i submited it and became a much bigger application than i originally intended it to be. It will probably change more as i continue to add more features to it and fix bugs that i encounter. 

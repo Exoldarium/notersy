@@ -268,6 +268,8 @@ import DOMPurify from "dompurify";
   }
 
   // get textContent from notes, used in file download
+  // TODO
+  // the notes are only downloaded from an active category for some reason, find a way to fix this
   const noteText = [];
   for (const node of noteList.childNodes) {
     for (const nodes of node.childNodes) {
