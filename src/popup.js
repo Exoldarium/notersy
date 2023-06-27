@@ -6,6 +6,8 @@ import '../styles/popup.css';
   const storedInputValuesRes = await chrome.storage.local.get('storedInputValues');
   const selectedText = res.selectedText || [];
 
+  console.log(storedInputValuesRes);
+
   const notesList = document.querySelector(".noteList");
   const categoryList = document.querySelector(".categoryList");
   const renameForm = document.querySelector(".renameCategory");

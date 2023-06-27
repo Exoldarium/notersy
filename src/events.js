@@ -134,7 +134,6 @@ import DOMPurify from "dompurify";
     const textInput = document.querySelector('.textInput');
     const submitButton = document.querySelector('.confirmNoteButton');
     const cleanString = DOMPurify.sanitize(textInput.innerHTML);
-    const textString = JSON.stringify(cleanString).replace(/(^"|"$)/g, '');
 
     if (e.target === submitButton) {
       requestSubmit(submitButton);
@@ -147,7 +146,7 @@ import DOMPurify from "dompurify";
           edit: false,
           id: self.crypto.randomUUID(),
           title: titleInput.value,
-          text: textString,
+          text: cleanString,
         });
         key.customNote = false;
       }
@@ -159,7 +158,7 @@ import DOMPurify from "dompurify";
         if (key.edit) {
           // add storage values to input values, remove duplicate notes
           key.title = titleInput.value;
-          key.text = textString;
+          key.text = cleanString;
           keys.customNote = false;
           key.edit = false;
           keys.note.pop();
@@ -219,12 +218,11 @@ import DOMPurify from "dompurify";
     const titleInput = document.querySelector('input[type="text"]');
     const textInput = document.querySelector('.textInput');
     const cleanString = DOMPurify.sanitize(textInput.innerHTML);
-    const textString = JSON.stringify(cleanString).replace(/(^"|"$)/g, '');
 
     chrome.storage.local.set({
       "storedInputValues": {
         title: titleInput.value,
-        text: textString,
+        text: cleanString,
       }
     });
   }
