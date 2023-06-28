@@ -64,7 +64,7 @@ import DOMPurify from "dompurify";
   }
 
   // deletes active category
-  async function deleteCategory() {
+  function deleteCategory() {
     for (const keys of selectedText) {
       const nameCheck = keys.name.length > 50 ? keys.name.slice(0, 50) + '...' : keys.name;
       if (keys.active) {
@@ -267,16 +267,10 @@ import DOMPurify from "dompurify";
     document.execCommand('insertText', false, data);
   }
 
-  // get textContent from notes, used in file download
-  // TODO
-  // the notes are only downloaded from an active category for some reason, find a way to fix this
   const noteText = [];
-  for (const node of noteList.childNodes) {
-    for (const nodes of node.childNodes) {
-      noteText.push(nodes.textContent + '\n\n');
-    }
+  for (const note of selectedText) {
+    noteText.push(...note.note);
   }
-
 
   // send the updated array back to background.js
   chrome.runtime.sendMessage({ message: selectedText });

@@ -4,6 +4,11 @@ import '../styles/options.css';
   const res = await chrome.storage.local.get('noteText');
   const noteText = res.noteText || [];
 
+  const arr = [];
+  for (const note of noteText) {
+    arr.push(note.title + '\n', note.text + '\n\n');
+  }
+
   const confirmClearDiv = document.querySelector('.confirmClear');
   const clearStorageButton = document.querySelector('.clearStorageButton');
   const downloadButton = document.querySelector('.downloadButton');
@@ -42,7 +47,7 @@ import '../styles/options.css';
   // download the file after the button has been clicked
   function downloadFile(e) {
     if (e.target) {
-      prepareFile('notes.txt', noteText.join(''));
+      prepareFile('notes.txt', arr.join(''));
     }
   }
 
