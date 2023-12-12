@@ -1,4 +1,5 @@
 # Notersy a note taking chrome extension
+# This is the old version of the extension you can check the source code for the new one [here](https://github.com/Exoldarium/notersy-v2)
 
 A small chrome extension that allows users to add, create, update and delete notes, group them in categories. The notes are saved in Chrome's local storage so they can be accesed at any time.
 
